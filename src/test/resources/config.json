@@ -1,0 +1,36 @@
+{
+	states: [{
+		id: "default",
+		value: "org.joo.state.test.states.DefaultTestState"
+	}, {
+		id: "add",
+		value: "org.joo.state.test.states.AddTestState"
+	}, {
+		id: "multiply",
+		value: "org.joo.state.test.states.MultiplyTestState"
+	}, {
+		id: "substract",
+		value: "org.joo.state.test.states.SubstractTestState"
+	}, {
+		id: "divide",
+		value: "org.joo.state.test.states.DivideTestState"
+	}],
+	flows: {
+		default: [{
+			action: "*",
+			transitions: ["add"]
+		}],
+		add: [{
+			action: "*",
+			transitions: ["multiply"]
+		}],
+		multiply: [{
+			action: "*",
+			transitions: ["substract"]
+		}],
+		substract: [{
+			action: "*",
+			transitions: ["divide"]
+		}]
+	}
+}
