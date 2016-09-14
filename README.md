@@ -48,7 +48,7 @@ And for the state itself, here is a simple implementation of a state
 
         @Override
         public void onExit(StateChangedEvent event) {
-                System.out.println("exiting default test state");
+            System.out.println("exiting default test state");
         }
     }
 
