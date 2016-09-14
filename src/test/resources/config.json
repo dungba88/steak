@@ -1,19 +1,19 @@
 {
 	states: [{
 		id: "default",
-		value: "org.joo.state.test.states.DefaultTestState"
+		value: "org.joo.steak.test.states.DefaultTestState"
 	}, {
 		id: "add",
-		value: "org.joo.state.test.states.AddTestState"
+		value: "org.joo.steak.test.states.AddTestState"
 	}, {
 		id: "multiply",
-		value: "org.joo.state.test.states.MultiplyTestState"
+		value: "org.joo.steak.test.states.MultiplyTestState"
 	}, {
 		id: "substract",
-		value: "org.joo.state.test.states.SubstractTestState"
+		value: "org.joo.steak.test.states.SubstractTestState"
 	}, {
 		id: "divide",
-		value: "org.joo.state.test.states.DivideTestState"
+		value: "org.joo.steak.test.states.DivideTestState"
 	}],
 	flows: {
 		default: [{
