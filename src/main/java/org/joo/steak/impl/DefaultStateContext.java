@@ -19,16 +19,17 @@
 package org.joo.steak.impl;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.joo.steak.framework.StateContext;
 
-public abstract class AbstractStateContext implements StateContext {
+public class DefaultStateContext implements StateContext {
 	
 	private String initialState;
 	
 	private HashMap<String, Object> contextMap;
 	
-	public AbstractStateContext(String initialState) {
+	public DefaultStateContext(String initialState) {
 		this.initialState = initialState;
 		this.contextMap = new HashMap<>();
 	}
@@ -38,7 +39,8 @@ public abstract class AbstractStateContext implements StateContext {
 		return initialState;
 	}
 
-	public HashMap<String, Object> getContextMap() {
+	@Override
+	public Map<String, Object> getContextMap() {
 		return contextMap;
 	}
 }

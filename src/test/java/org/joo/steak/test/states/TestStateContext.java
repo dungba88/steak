@@ -18,9 +18,9 @@
  */
 package org.joo.steak.test.states;
 
-import org.joo.steak.impl.AbstractStateContext;
+import org.joo.steak.impl.DefaultStateContext;
 
-public class TestStateContext extends AbstractStateContext {
+public class TestStateContext extends DefaultStateContext {
 	
 	private int data;
 
