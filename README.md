@@ -6,7 +6,7 @@ Steak is a simple State Pattern implementation in Java which let you easily code
 It allows you to use JSON, XML or an explicit configuration.
 
 ## Requirements
-It requires Java 7 to run. If you want to use JSON configuration then you also need to import [org.json](http://json.org/)
+It requires Java 7 to run. If you want to use JSON configuration then you also need to import [org.json](http://json.org/). Also if you want to run the test, then also to add JUnit to your classpath.
 
 ## How to use
 At the simplest setup, it allows require a few line of codes to run
@@ -52,7 +52,7 @@ And for the state itself, here is a simple implementation of a state
 
 ## How does it work
 
-Steak use a loosely coupled implementation of State Pattern. That means each state will be independent from each other. Each
+Steak use a loosely coupled implementation of State Pattern. That means each state will be independent from others. Each
 state handles its own logic, then dispatch an event to notify the StateManager to move to next state. The transition flow
 can be defined via the configuration.
 
