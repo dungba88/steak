@@ -6,16 +6,11 @@
 	<groupId>org.joo.state</groupId>
 	<version>0.1.0</version>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.2.3.RELEASE</version>
-	</parent>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<version>1.4.0.RELEASE</version>
 		</dependency>
 
 		<dependency>
@@ -28,6 +23,7 @@
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
 			<scope>provided</scope>
+			<version>8.5.4</version>
 		</dependency>
 
 		<dependency>
@@ -42,6 +38,11 @@
 			<version>2.4</version>
 		</dependency>
 
+		<dependency>
+		    <groupId>junit</groupId>
+		    <artifactId>junit</artifactId>
+		    <version>4.12</version>
+		</dependency>
 	</dependencies>
 
 	<properties>
@@ -69,5 +70,5 @@
 			<url>https://repo.spring.io/libs-release</url>
 		</pluginRepository>
 	</pluginRepositories>
-	<artifactId>xblog</artifactId>
+	<artifactId>joo-steak</artifactId>
 </project>
