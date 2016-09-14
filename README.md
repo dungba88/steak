@@ -6,7 +6,7 @@ Steak is a simple State Pattern implementation in Java which let you easily code
 It allows you to use JSON, XML or an explicit configuration.
 
 ## Requirements
-It requires Java 7 to run. If you want to use JSON configuration then you also need to import [org.json](http://json.org/). Also if you want to run the test, then also to add JUnit to your classpath.
+It requires Java 7 to run. If you want to use JSON configuration then you also need to import [org.json](http://json.org/). Also if you want to run the test, then also to add JUnit to your classpath. Or you can simply configure your Eclipse project as a maven project and let it update the dependencies.
 
 ## How to use
 At the simplest setup, it allows require a few line of codes to run
