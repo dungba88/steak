@@ -1,6 +1,7 @@
 package org.joo.steak.framework;
 
 import org.joo.steak.framework.event.StateChangedDispatcher;
+import org.joo.steak.framework.event.StateChangedEvent;
 
 /**
  * A state is an independent object which can perform business logic
@@ -19,5 +20,12 @@ public interface State extends StateChangedDispatcher {
 	 * @param stateContext 
 	 * 			the state context which may contains data to be processed
 	 */
-	public void handle(StateContext stateContext);
+	public void onEntry(StateContext stateContext);
+	
+	/**
+	 * Called by <code>StateManager</code> when exiting the current state
+	 * @param event
+	 * 			the original event dispatched by this state when changing state
+	 */
+	public void onExit(StateChangedEvent event);
 }

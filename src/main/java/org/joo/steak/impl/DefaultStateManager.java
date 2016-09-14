@@ -11,10 +11,8 @@ import org.joo.steak.framework.event.StateChangedEvent;
 public class DefaultStateManager extends AbstractStateManager {
 
 	@Override
-	public void run() {
-		State currentState = getState(getCurrentState());
-		if (currentState != null)
-			currentState.handle(getStateContext());
+	public void doRun() {
+		super.changeNextState(getInitialState(), null);
 	}
 	
 	@Override
@@ -36,7 +34,7 @@ public class DefaultStateManager extends AbstractStateManager {
 			}
 		}
 
-		super.changeNextState(nextStateId);
+		super.changeNextState(nextStateId, event);
 	}
 
 	@Override

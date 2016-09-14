@@ -9,54 +9,75 @@ import org.joo.steak.framework.StateContext;
 import org.joo.steak.framework.StateManager;
 import org.joo.steak.framework.StateTransition;
 import org.joo.steak.framework.config.StateEngineConfiguration;
+import org.joo.steak.framework.event.StateChangedEvent;
 import org.joo.steak.framework.loader.StateEngineLoader;
 import org.joo.steak.impl.loader.DefaultStateEngineLoader;
 
 public abstract class AbstractStateManager implements StateManager {
-	
+
 	private static final Object GLOBAL_ACTION = "*";
 
 	private Map<String, State> statesMap;
-	
+
 	private Map<String, Map<String, StateTransition[]>> transitionsMap;
-	
+
 	private StateContext stateContext;
-	
+
 	private String currentState;
-	
+
+	private String initialState;
+
 	private boolean initialized;
-	
+
+	private boolean ran;
+
 	@Override
-	public void initialize(StateContext stateContext, StateEngineConfiguration configuration, StateEngineLoader loader) {
+	public void initialize(StateContext stateContext,
+			StateEngineConfiguration configuration, StateEngineLoader loader) {
 		if (stateContext == null || configuration == null)
-			throw new NullPointerException("stateContext or configuration is null");
-		
+			throw new NullPointerException(
+					"stateContext or configuration is null");
+
 		if (!this.initialized) {
 			if (loader == null)
 				loader = new DefaultStateEngineLoader();
-			
-			this.statesMap = initializeStatesConfig(loader, configuration.getStatesConfig());
-			this.transitionsMap = initializeTransitionsConfig(loader, configuration.getTransitionsConfig());
-			this.currentState = stateContext.getInitialState();
+
+			this.statesMap = initializeStatesConfig(loader,
+					configuration.getStatesConfig());
+			this.transitionsMap = initializeTransitionsConfig(loader,
+					configuration.getTransitionsConfig());
+			this.initialState = stateContext.getInitialState();
 			this.stateContext = stateContext;
-			
+
 			doInitialization(configuration);
-			
+
 			this.initialized = true;
 		}
 	}
-	
-	private Map<String, Map<String, StateTransition[]>> initializeTransitionsConfig(StateEngineLoader loader,
+
+	@Override
+	public void run() {
+		if (ran) {
+			throw new IllegalStateException("StateManager is already running");
+		}
+		ran = true;
+		doRun();
+	}
+
+	private Map<String, Map<String, StateTransition[]>> initializeTransitionsConfig(
+			StateEngineLoader loader,
 			Map<String, Map<String, Object[]>> transitionsConfig) {
-		
+
 		Map<String, Map<String, StateTransition[]>> map = doInitializeTransitionsMap();
 		if (transitionsConfig != null) {
 			for (String stateName : transitionsConfig.keySet()) {
-				Map<String, Object[]> transitionConfig = transitionsConfig.get(stateName);
+				Map<String, Object[]> transitionConfig = transitionsConfig
+						.get(stateName);
 				Map<String, StateTransition[]> transitionsMap = doInitializeTransitionMap();
 				for (String action : transitionConfig.keySet()) {
 					Object[] transitionObjects = transitionConfig.get(action);
-					StateTransition[] transitions = loadTransitions(loader, transitionObjects);
+					StateTransition[] transitions = loadTransitions(loader,
+							transitionObjects);
 					transitionsMap.put(action, transitions);
 				}
 				map.put(stateName, transitionsMap);
@@ -65,17 +86,20 @@ public abstract class AbstractStateManager implements StateManager {
 		return map;
 	}
 
-	private StateTransition[] loadTransitions(StateEngineLoader loader, Object[] transitionObjects) {
+	private StateTransition[] loadTransitions(StateEngineLoader loader,
+			Object[] transitionObjects) {
 		List<StateTransition> transitions = new ArrayList<>();
 		for (Object transitionObject : transitionObjects) {
-			StateTransition transition = loader.loadTransition(transitionObject);
+			StateTransition transition = loader
+					.loadTransition(transitionObject);
 			transitions.add(transition);
 		}
 		return transitions.toArray(new StateTransition[0]);
 	}
 
-	private Map<String, State> initializeStatesConfig(StateEngineLoader loader, Map<String, Object> statesConfig) {
-		
+	private Map<String, State> initializeStatesConfig(StateEngineLoader loader,
+			Map<String, Object> statesConfig) {
+
 		Map<String, State> statesMap = doInitializeStatesMap();
 		if (statesConfig != null) {
 			for (String key : statesConfig.keySet()) {
@@ -89,11 +113,14 @@ public abstract class AbstractStateManager implements StateManager {
 
 	protected abstract Map<String, State> doInitializeStatesMap();
 
+	protected abstract void doRun();
+
 	protected abstract Map<String, StateTransition[]> doInitializeTransitionMap();
 
 	protected abstract Map<String, Map<String, StateTransition[]>> doInitializeTransitionsMap();
 
-	protected abstract void doInitialization(StateEngineConfiguration configuration);
+	protected abstract void doInitialization(
+			StateEngineConfiguration configuration);
 
 	@Override
 	public State getState(String stateName) {
@@ -104,9 +131,11 @@ public abstract class AbstractStateManager implements StateManager {
 	}
 
 	@Override
-	public StateTransition[] getTransitionsForState(String stateName, String action) {
+	public StateTransition[] getTransitionsForState(String stateName,
+			String action) {
 		if (transitionsMap != null && transitionsMap.containsKey(stateName)) {
-			Map<String, StateTransition[]> transitions = transitionsMap.get(stateName);
+			Map<String, StateTransition[]> transitions = transitionsMap
+					.get(stateName);
 			if (transitions != null) {
 				if (transitions.containsKey(action))
 					return transitions.get(stateName);
@@ -116,15 +145,22 @@ public abstract class AbstractStateManager implements StateManager {
 		}
 		return new StateTransition[0];
 	}
-	
-	protected void changeNextState(String nextStateId) {
+
+	protected void changeNextState(String nextStateId, StateChangedEvent event) {
+		if (currentState != null) {
+			State currentStateObj = getState(currentState);
+			if (currentStateObj != null) {
+				currentStateObj.onExit(event);
+			}
+		}
+
 		State nextState = getState(nextStateId);
 		if (nextState != null) {
 			currentState = nextStateId;
-			nextState.handle(stateContext);
+			nextState.onEntry(stateContext);
 		}
 	}
-	
+
 	@Override
 	public StateContext getStateContext() {
 		return stateContext;
@@ -139,9 +175,13 @@ public abstract class AbstractStateManager implements StateManager {
 	public Map<String, Map<String, StateTransition[]>> getStateTransitions() {
 		return transitionsMap;
 	}
-	
+
 	@Override
 	public String getCurrentState() {
 		return currentState;
+	}
+
+	public String getInitialState() {
+		return initialState;
 	}
 }
