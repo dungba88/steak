@@ -40,14 +40,17 @@ And for the state itself, here is a simple implementation of a state
 
     public class DefaultTestState extends AbstractState {
 	
-		@Override
-		public void handle(StateContext stateContext) {
-			TestStateContext testStateContext = (TestStateContext) stateContext;
-			System.out.println("current data: " + testStateContext.getData());
-			// move to next state
-			changeState("done", null);
-		}
+	@Override
+	public void onEntry(StateContext stateContext) {
+		System.out.println("entering default test state");
+		changeState("done", null);
 	}
+
+	@Override
+	public void onExit(StateChangedEvent event) {
+		System.out.println("exiting default test state");
+	}
+    }
 
 
 ## How does it work
