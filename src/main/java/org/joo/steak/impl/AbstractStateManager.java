@@ -138,7 +138,7 @@ public abstract class AbstractStateManager implements StateManager {
 					.get(stateName);
 			if (transitions != null) {
 				if (transitions.containsKey(action))
-					return transitions.get(stateName);
+					return transitions.get(action);
 				if (transitions.containsKey(GLOBAL_ACTION))
 					return transitions.get(GLOBAL_ACTION);
 			}
