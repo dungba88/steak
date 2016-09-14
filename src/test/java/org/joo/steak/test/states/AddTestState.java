@@ -29,7 +29,7 @@ public class AddTestState extends AbstractState {
 	}
 
 	@Override
-	public void onEntry(StateContext stateContext) {
+	public void onEntry(StateContext stateContext, StateChangedEvent event) {
 		System.out.println("entering add test state");
 		TestStateContext testStateContext = (TestStateContext) stateContext;
 		testStateContext.addData(2);

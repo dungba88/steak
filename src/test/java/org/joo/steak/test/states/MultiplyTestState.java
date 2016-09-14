@@ -29,7 +29,7 @@ public class MultiplyTestState extends AbstractState {
 	}
 
 	@Override
-	public void onEntry(StateContext stateContext) {
+	public void onEntry(StateContext stateContext, StateChangedEvent event) {
 		System.out.println("entering multiply test state");
 		TestStateContext testStateContext = (TestStateContext) stateContext;
 		testStateContext.multiplyData(2);

@@ -29,7 +29,7 @@ public class DefaultTestState extends AbstractState {
 	}
 
 	@Override
-	public void onEntry(StateContext stateContext) {
+	public void onEntry(StateContext stateContext, StateChangedEvent event) {
 		System.out.println("entering default test state");
 		TestStateContext testStateContext = (TestStateContext) stateContext;
 		System.out.println("current data: " + testStateContext.getData());

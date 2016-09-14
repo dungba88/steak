@@ -37,8 +37,10 @@ public interface State extends StateChangedDispatcher {
 	 * Called by <code>StateManager</code> when reaching the current state
 	 * @param stateContext 
 	 * 			the state context which may contains data to be processed
+	 * @param event
+	 * 			the event dispatched by last state when it finishes
 	 */
-	public void onEntry(StateContext stateContext);
+	public void onEntry(StateContext stateContext, StateChangedEvent event);
 	
 	/**
 	 * Called by <code>StateManager</code> when exiting the current state

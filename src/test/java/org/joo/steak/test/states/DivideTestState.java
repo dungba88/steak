@@ -29,7 +29,7 @@ public class DivideTestState extends AbstractState {
 	}
 
 	@Override
-	public void onEntry(StateContext stateContext) {
+	public void onEntry(StateContext stateContext, StateChangedEvent event) {
 		System.out.println("entering divide test state");
 		TestStateContext testStateContext = (TestStateContext) stateContext;
 		testStateContext.divideData(2);

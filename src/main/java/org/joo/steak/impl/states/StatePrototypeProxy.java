@@ -30,9 +30,9 @@ public class StatePrototypeProxy extends AbstractStateProxy {
 	}
 
 	@Override
-	public void onEntry(StateContext stateContext) {
+	public void onEntry(StateContext stateContext, StateChangedEvent event) {
 		State loadedState = loadState();
-		loadedState.onEntry(stateContext);
+		loadedState.onEntry(stateContext, event);
 	}
 
 	@Override

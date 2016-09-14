@@ -32,11 +32,11 @@ public class StateLazyLoadProxy extends AbstractStateProxy {
 	}
 
 	@Override
-	public void onEntry(StateContext stateContext) {
+	public void onEntry(StateContext stateContext, StateChangedEvent event) {
 		if (loadedState == null) {
 			loadedState = loadState();
 		}
-		loadedState.onEntry(stateContext);
+		loadedState.onEntry(stateContext, event);
 	}
 	
 	@Override

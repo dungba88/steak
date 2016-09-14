@@ -175,7 +175,7 @@ public abstract class AbstractStateManager implements StateManager {
 		State nextState = getState(nextStateId);
 		if (nextState != null) {
 			currentState = nextStateId;
-			nextState.onEntry(stateContext);
+			nextState.onEntry(stateContext, event);
 		}
 	}
 

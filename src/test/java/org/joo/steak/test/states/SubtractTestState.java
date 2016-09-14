@@ -29,7 +29,7 @@ public class SubtractTestState extends AbstractState {
 	}
 
 	@Override
-	public void onEntry(StateContext stateContext) {
+	public void onEntry(StateContext stateContext, StateChangedEvent event) {
 		System.out.println("entering subtract test state");
 		TestStateContext testStateContext = (TestStateContext) stateContext;
 		testStateContext.substractData(2);
