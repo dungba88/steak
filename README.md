@@ -40,14 +40,17 @@ And for the state itself, here is a simple implementation of a state
 
     public class DefaultTestState extends AbstractState {
 	
-		@Override
-		public void handle(StateContext stateContext) {
-			TestStateContext testStateContext = (TestStateContext) stateContext;
-			System.out.println("current data: " + testStateContext.getData());
-			// move to next state
-			changeState("done", null);
-		}
-	}
+        @Override
+        public void onEntry(StateContext stateContext) {
+            System.out.println("entering default test state");
+            changeState("done", null);
+        }
+
+        @Override
+        public void onExit(StateChangedEvent event) {
+            System.out.println("exiting default test state");
+        }
+    }
 
 
 ## How does it work
@@ -61,4 +64,12 @@ Then we defined the transition flows between those states. This line of code:
 
     configuration.addTransition("default", "*", "add");
     
-means when we are in `default` state, if there any event dispatched, then we'll move to `add` state.
+means when we are in `default` state, if there any event dispatched, then we'll move to `add` state. You can also specify a `StateTransition` object, so the following code will be equivalent to the above:
+
+    configuration.addTransition("default", "*", new SimpleStateTransition("add"));
+
+Of course you can use your own `StateTransition`!
+
+## JSON and XML configuration
+
+JSON and XML configuration are supported. Please check `src/test/resources/config.json` and `src/test/resources/config.xml` for more details.
