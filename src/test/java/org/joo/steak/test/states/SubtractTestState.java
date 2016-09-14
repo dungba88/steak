@@ -3,9 +3,9 @@ package org.joo.steak.test.states;
 import org.joo.steak.framework.StateContext;
 import org.joo.steak.impl.AbstractState;
 
-public class SubstractTestState extends AbstractState {
+public class SubtractTestState extends AbstractState {
 	
-	public SubstractTestState() {
+	public SubtractTestState() {
 		System.out.println("creating substract test state");
 	}
 

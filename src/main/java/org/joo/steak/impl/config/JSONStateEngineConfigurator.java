@@ -2,7 +2,6 @@ package org.joo.steak.impl.config;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import org.joo.steak.framework.StateInitializationException;
 import org.joo.steak.framework.config.StateEngineConfiguration;
@@ -27,8 +26,8 @@ public class JSONStateEngineConfigurator implements StateEngineConfigurator {
 			JSONArray statesJSON = configJSON.optJSONArray("states");
 			Map<String, Object> states = parseStatesJSON(statesJSON);
 			
-			JSONObject transitionsJSON = configJSON.optJSONObject("flows");
-			Map<String, Map<String, Object[]>> transitions = parseTransitionsJSON(states.keySet(), transitionsJSON);
+			JSONArray transitionsJSON = configJSON.optJSONArray("flows");
+			Map<String, Map<String, Object[]>> transitions = parseTransitionsJSON(transitionsJSON);
 			
 			return new DefaultStateEngineConfiguration(states, transitions);
 		} catch (JSONException ex) {
@@ -36,30 +35,20 @@ public class JSONStateEngineConfigurator implements StateEngineConfigurator {
 		}
 	}
 
-	private Map<String, Map<String, Object[]>> parseTransitionsJSON(Set<String> states, JSONObject transitionsJSON) {
+	private Map<String, Map<String, Object[]>> parseTransitionsJSON(JSONArray transitionsJSON) {
 		Map<String, Map<String, Object[]>> map = new HashMap<>();
 		if (transitionsJSON != null) {
-			for (String state : states) {
-				JSONArray transitionsStateJSON = transitionsJSON.optJSONArray(state);
-				if (transitionsStateJSON != null) {
-					Map<String, Object[]> transitionMap = parseTransitionsStateJSON(transitionsStateJSON);
-					if (!transitionMap.isEmpty()) {
-						map.put(state, transitionMap);
-					}
+			for (int i=0; i<transitionsJSON.length(); i++) {
+				JSONObject transitionJSON = transitionsJSON.getJSONObject(i);
+				String state = transitionJSON.getString("from");
+				String action = transitionJSON.getString("action");
+				if (!map.containsKey(state)) {
+					map.put(state, new HashMap<String, Object[]>());
 				}
+				JSONArray transitionsArrJSON = transitionJSON.getJSONArray("transitions");
+				Object[] transitions = parseTransitionsArrJSON(transitionsArrJSON);
+				map.get(state).put(action, transitions);
 			}
-		}
-		return map;
-	}
-
-	private Map<String, Object[]> parseTransitionsStateJSON(JSONArray transitionsStateJSON) {
-		Map<String, Object[]> map = new HashMap<>();
-		for (int i=0; i<transitionsStateJSON.length(); i++) {
-			JSONObject obj = transitionsStateJSON.getJSONObject(i);
-			String action = obj.getString("action");
-			JSONArray transitionsArrJSON = obj.getJSONArray("transitions");
-			Object[] transitions = parseTransitionsArrJSON(transitionsArrJSON);
-			map.put(action, transitions);
 		}
 		return map;
 	}
@@ -81,7 +70,7 @@ public class JSONStateEngineConfigurator implements StateEngineConfigurator {
 		if (statesJSON != null) {
 			for (int i=0; i<statesJSON.length(); i++) {
 				JSONObject obj = statesJSON.getJSONObject(i);
-				String key = obj.getString("id");
+				String key = obj.getString("name");
 				String value = obj.getString("value");
 				map.put(key, value);
 			}

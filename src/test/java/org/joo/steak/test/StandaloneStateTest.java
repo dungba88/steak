@@ -9,13 +9,14 @@ import org.joo.steak.framework.config.StateEngineConfiguration;
 import org.joo.steak.impl.DefaultStateManager;
 import org.joo.steak.impl.config.DefaultStateEngineConfiguration;
 import org.joo.steak.impl.config.JSONStateEngineConfigurator;
+import org.joo.steak.impl.config.XMLStateEngineConfigurator;
 import org.joo.steak.impl.loader.ImmediateStateEngineLoader;
 import org.joo.steak.impl.loader.PrototypeStateEngineLoader;
 import org.joo.steak.test.states.AddTestState;
 import org.joo.steak.test.states.DefaultTestState;
 import org.joo.steak.test.states.DivideTestState;
 import org.joo.steak.test.states.MultiplyTestState;
-import org.joo.steak.test.states.SubstractTestState;
+import org.joo.steak.test.states.SubtractTestState;
 import org.joo.steak.test.states.TestStateContext;
 import org.junit.Assert;
 import org.junit.Test;
@@ -27,6 +28,24 @@ import org.junit.Test;
  *
  */
 public class StandaloneStateTest {
+	
+	/**
+	 * Test with XML configuration
+	 */
+	@Test
+	public void testXML() {
+		TestStateContext stateContext = new TestStateContext("default", 0);
+
+		StateEngineConfiguration configuration = setupXMLConfiguration();
+
+		System.out.println("testing with XML configuration and immediate state loading");
+
+		StateManager manager = new DefaultStateManager();
+		manager.initialize(stateContext, configuration, new ImmediateStateEngineLoader());
+		manager.run();
+
+		Assert.assertEquals(1, stateContext.getData());
+	}
 	
 	/**
 	 * Test with JSON configuration
@@ -106,13 +125,13 @@ public class StandaloneStateTest {
 		configuration.addState("default", "org.joo.steak.test.states.DefaultTestState");
 		configuration.addState("add", "org.joo.steak.test.states.AddTestState");
 		configuration.addState("multiply", "org.joo.steak.test.states.MultiplyTestState");
-		configuration.addState("substract", "org.joo.steak.test.states.SubstractTestState");
+		configuration.addState("subtract", "org.joo.steak.test.states.SubtractTestState");
 		configuration.addState("divide", "org.joo.steak.test.states.DivideTestState");
 
 		configuration.addTransition("default", "*", "add");
 		configuration.addTransition("add", "*", "multiply");
-		configuration.addTransition("multiply", "*", "substract");
-		configuration.addTransition("substract", "*", "divide");
+		configuration.addTransition("multiply", "*", "subtract");
+		configuration.addTransition("subtract", "*", "divide");
 
 		return configuration;
 	}
@@ -123,13 +142,13 @@ public class StandaloneStateTest {
 		configuration.addState("default", new DefaultTestState());
 		configuration.addState("add", new AddTestState());
 		configuration.addState("multiply", new MultiplyTestState());
-		configuration.addState("substract", new SubstractTestState());
+		configuration.addState("subtract", new SubtractTestState());
 		configuration.addState("divide", new DivideTestState());
 
 		configuration.addTransition("default", "*", "add");
 		configuration.addTransition("add", "*", "multiply");
-		configuration.addTransition("multiply", "*", "substract");
-		configuration.addTransition("substract", "*", "divide");
+		configuration.addTransition("multiply", "*", "subtract");
+		configuration.addTransition("subtract", "*", "divide");
 
 		return configuration;
 	}
@@ -137,6 +156,12 @@ public class StandaloneStateTest {
 	private StateEngineConfiguration setupJSONConfiguration() {
 		String config = readFile("src/test/resources/config.json");
 		JSONStateEngineConfigurator configurator = new JSONStateEngineConfigurator(config);
+		return configurator.getConfiguration();
+	}
+	
+	private StateEngineConfiguration setupXMLConfiguration() {
+		String config = readFile("src/test/resources/config.xml");
+		XMLStateEngineConfigurator configurator = new XMLStateEngineConfigurator(config);
 		return configurator.getConfiguration();
 	}
 	
