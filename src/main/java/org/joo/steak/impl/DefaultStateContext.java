@@ -20,6 +20,7 @@ package org.joo.steak.impl;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import org.joo.steak.framework.StateContext;
 
@@ -28,10 +29,13 @@ public class DefaultStateContext implements StateContext {
 	private String initialState;
 
 	private HashMap<String, Object> contextMap;
+	
+	private String uuid;
 
 	public DefaultStateContext(String initialState) {
 		this.initialState = initialState;
 		this.contextMap = new HashMap<>();
+		this.uuid = UUID.randomUUID().toString();
 	}
 
 	@Override
@@ -42,5 +46,10 @@ public class DefaultStateContext implements StateContext {
 	@Override
 	public Map<String, Object> getContextMap() {
 		return contextMap;
+	}
+
+	@Override
+	public String getUUID() {
+		return uuid;
 	}
 }
