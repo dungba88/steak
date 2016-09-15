@@ -29,9 +29,11 @@ import org.joo.steak.framework.StateTransition;
 import org.joo.steak.framework.config.StateEngineConfiguration;
 import org.joo.steak.framework.event.StateChangedEvent;
 import org.joo.steak.framework.loader.StateEngineLoader;
+import org.joo.steak.impl.event.AbstractStateEngineDispatcher;
 import org.joo.steak.impl.loader.DefaultStateEngineLoader;
 
-public abstract class AbstractStateManager implements StateManager {
+public abstract class AbstractStateManager extends
+		AbstractStateEngineDispatcher implements StateManager {
 
 	private static final Object GLOBAL_ACTION = "*";
 
@@ -79,6 +81,9 @@ public abstract class AbstractStateManager implements StateManager {
 			throw new IllegalStateException("StateManager is already running");
 		}
 		ran = true;
+
+		dispatchStateEngineStartEvent(stateContext);
+
 		doRun();
 	}
 
@@ -171,11 +176,14 @@ public abstract class AbstractStateManager implements StateManager {
 				currentStateObj.onExit(event);
 			}
 		}
-
+		
 		State nextState = getState(nextStateId);
 		if (nextState != null) {
 			currentState = nextStateId;
 			nextState.onEntry(stateContext, event);
+		} else {
+			// no state found, exit the engine
+			dispatchStateEngineFinishEvent(event);
 		}
 	}
 

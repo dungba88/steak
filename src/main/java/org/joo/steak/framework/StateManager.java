@@ -22,6 +22,7 @@ import java.util.Map;
 
 import org.joo.steak.framework.config.StateEngineConfiguration;
 import org.joo.steak.framework.event.StateChangedListener;
+import org.joo.steak.framework.event.StateEngineDispatcher;
 import org.joo.steak.framework.loader.StateEngineLoader;
 
 /**
@@ -31,7 +32,7 @@ import org.joo.steak.framework.loader.StateEngineLoader;
  * @author griever
  *
  */
-public interface StateManager extends StateChangedListener {
+public interface StateManager extends StateChangedListener, StateEngineDispatcher {
 
 	/**
 	 * Initialize the state engine. Implementation should make sure that this
