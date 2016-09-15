@@ -18,7 +18,18 @@
  */
 package org.joo.steak.framework.config;
 
+/**
+ * An interface for configuration loader
+ * 
+ * @author griever
+ *
+ */
 public interface StateEngineConfigurator {
 
+	/**
+	 * Get the configuration
+	 * 
+	 * @return the configuration
+	 */
 	public StateEngineConfiguration getConfiguration();
 }
