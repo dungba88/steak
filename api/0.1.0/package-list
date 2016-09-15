@@ -8,5 +8,3 @@ org.joo.steak.impl.config
 org.joo.steak.impl.event
 org.joo.steak.impl.loader
 org.joo.steak.impl.states
-org.joo.steak.test
-org.joo.steak.test.states
