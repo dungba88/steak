@@ -31,8 +31,7 @@ public class DefaultStateEngineConfigurator implements StateEngineConfigurator {
 
 	@Override
 	public StateEngineConfiguration getConfiguration() {
-		return new DefaultStateEngineConfiguration(statesConfig,
-				transitionsConfig);
+		return new DefaultStateEngineConfiguration(statesConfig, transitionsConfig);
 	}
 
 	public Map<String, Object> getStatesConfig() {
@@ -47,8 +46,7 @@ public class DefaultStateEngineConfigurator implements StateEngineConfigurator {
 		return transitionsConfig;
 	}
 
-	public void setTransitionsConfig(
-			Map<String, Map<String, Object[]>> transitionsConfig) {
+	public void setTransitionsConfig(Map<String, Map<String, Object[]>> transitionsConfig) {
 		this.transitionsConfig = transitionsConfig;
 	}
 }

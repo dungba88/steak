@@ -29,7 +29,7 @@ public class DefaultStateContext implements StateContext {
 	private String initialState;
 
 	private HashMap<String, Object> contextMap;
-	
+
 	private String uuid;
 
 	public DefaultStateContext(String initialState) {

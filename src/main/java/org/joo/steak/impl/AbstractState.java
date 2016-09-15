@@ -30,8 +30,7 @@ import org.joo.steak.impl.event.AbstractStateChangedDispatcher;
  * @author griever
  *
  */
-public abstract class AbstractState extends AbstractStateChangedDispatcher
-		implements State {
+public abstract class AbstractState extends AbstractStateChangedDispatcher implements State {
 
 	/**
 	 * Notify <code>StateManager</code> to change the state.

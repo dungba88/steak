@@ -27,8 +27,7 @@ import org.joo.steak.framework.event.StateChangedEvent;
 import org.joo.steak.framework.event.StateEngineDispatcher;
 import org.joo.steak.framework.event.StateEngineListener;
 
-public abstract class AbstractStateEngineDispatcher implements
-		StateEngineDispatcher {
+public abstract class AbstractStateEngineDispatcher implements StateEngineDispatcher {
 
 	public List<WeakReference<StateEngineListener>> listeners;
 
@@ -57,7 +56,7 @@ public abstract class AbstractStateEngineDispatcher implements
 			}
 		}
 	}
-	
+
 	@Override
 	public void dispatchStateChangedEvent(StateChangedEvent event) {
 		for (WeakReference<StateEngineListener> listenerRef : listeners) {
@@ -67,7 +66,7 @@ public abstract class AbstractStateEngineDispatcher implements
 			}
 		}
 	}
-	
+
 	@Override
 	public void dispatchStateEngineFinishEvent(StateChangedEvent event) {
 		for (WeakReference<StateEngineListener> listenerRef : listeners) {

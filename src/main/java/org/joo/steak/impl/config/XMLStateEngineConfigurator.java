@@ -69,20 +69,18 @@ public class XMLStateEngineConfigurator implements StateEngineConfigurator {
 			NodeList stateNodeList = fetchNodeList(doc, "/config/states/state");
 			Map<String, Object> states = parseStatesXML(stateNodeList);
 
-			NodeList transitionsNodeList = fetchNodeList(doc,
-					"/config/flows/flow");
+			NodeList transitionsNodeList = fetchNodeList(doc, "/config/flows/flow");
 
 			Map<String, Map<String, Object[]>> transitions = parseTransitionsXML(transitionsNodeList);
 
 			return new DefaultStateEngineConfiguration(states, transitions);
 		} catch (Exception ex) {
-			throw new StateInitializationException("Invalid XML configuration",
-					ex);
+			throw new StateInitializationException("Invalid XML configuration", ex);
 		}
 	}
 
-	private Map<String, Map<String, Object[]>> parseTransitionsXML(
-			NodeList transitionsNodeList) throws XPathExpressionException {
+	private Map<String, Map<String, Object[]>> parseTransitionsXML(NodeList transitionsNodeList)
+			throws XPathExpressionException {
 		Map<String, Map<String, Object[]>> map = new HashMap<>();
 		if (transitionsNodeList != null) {
 			for (int i = 0; i < transitionsNodeList.getLength(); i++) {
@@ -113,8 +111,7 @@ public class XMLStateEngineConfigurator implements StateEngineConfigurator {
 		return objects;
 	}
 
-	private Map<String, Object> parseStatesXML(NodeList stateNodeList)
-			throws XPathExpressionException {
+	private Map<String, Object> parseStatesXML(NodeList stateNodeList) throws XPathExpressionException {
 		Map<String, Object> map = new HashMap<>();
 		if (stateNodeList != null) {
 			for (int i = 0; i < stateNodeList.getLength(); i++) {
@@ -127,23 +124,18 @@ public class XMLStateEngineConfigurator implements StateEngineConfigurator {
 		return map;
 	}
 
-	private NodeList fetchNodeList(Node doc, String expression)
-			throws XPathExpressionException {
-		return (NodeList) xPath.compile(expression).evaluate(doc,
-				XPathConstants.NODESET);
+	private NodeList fetchNodeList(Node doc, String expression) throws XPathExpressionException {
+		return (NodeList) xPath.compile(expression).evaluate(doc, XPathConstants.NODESET);
 	}
 
-	private Node fetchNode(Node doc, String expression)
-			throws XPathExpressionException {
-		return (Node) xPath.compile(expression).evaluate(doc,
-				XPathConstants.NODE);
+	private Node fetchNode(Node doc, String expression) throws XPathExpressionException {
+		return (Node) xPath.compile(expression).evaluate(doc, XPathConstants.NODE);
 	}
 
-	private Document parse() throws UnsupportedEncodingException, SAXException,
-			IOException, ParserConfigurationException {
+	private Document parse()
+			throws UnsupportedEncodingException, SAXException, IOException, ParserConfigurationException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
-		return builder
-				.parse(new ByteArrayInputStream(config.getBytes(charset)));
+		return builder.parse(new ByteArrayInputStream(config.getBytes(charset)));
 	}
 }

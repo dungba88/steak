@@ -26,8 +26,7 @@ import org.joo.steak.framework.event.StateChangedDispatcher;
 import org.joo.steak.framework.event.StateChangedEvent;
 import org.joo.steak.framework.event.StateChangedListener;
 
-public abstract class AbstractStateChangedDispatcher implements
-		StateChangedDispatcher {
+public abstract class AbstractStateChangedDispatcher implements StateChangedDispatcher {
 
 	public List<WeakReference<StateChangedListener>> listeners;
 

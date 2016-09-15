@@ -32,7 +32,7 @@ public class ExecutorManager {
 	private ExecutorService executor;
 
 	private static ExecutorManager instance;
-	
+
 	private static final Object lock = new Object();
 
 	public static ExecutorManager getInstance() {
@@ -45,7 +45,7 @@ public class ExecutorManager {
 		}
 		return instance;
 	}
-	
+
 	private ExecutorManager() {
 		executor = Executors.newFixedThreadPool(8);
 	}

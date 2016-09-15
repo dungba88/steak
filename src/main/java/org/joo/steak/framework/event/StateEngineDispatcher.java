@@ -52,7 +52,7 @@ public interface StateEngineDispatcher {
 	 *            the context
 	 */
 	public void dispatchStateEngineStartEvent(StateContext stateContext);
-	
+
 	/**
 	 * Dispatch a <code>StateChangedEvent</code> to all listeners when the state
 	 * changed

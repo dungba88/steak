@@ -28,9 +28,10 @@ import java.util.Map;
  *
  */
 public interface StateContext {
-	
+
 	/**
 	 * The UUID for this StateContext instance
+	 * 
 	 * @return the UUID
 	 */
 	public String getUUID();

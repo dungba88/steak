@@ -35,7 +35,7 @@ public interface StateEngineListener extends StateChangedListener {
 	 *            the <code>StateEngineEvent</code>
 	 */
 	public void onStart(StateContext stateContext);
-	
+
 	/**
 	 * Called when the state engine finishes
 	 * 

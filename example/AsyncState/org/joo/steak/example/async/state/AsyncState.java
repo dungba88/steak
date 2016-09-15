@@ -77,6 +77,6 @@ public class AsyncState extends AbstractState {
 
 	@Override
 	public void onExit(StateChangedEvent event) {
-		
+
 	}
 }

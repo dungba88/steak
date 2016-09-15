@@ -56,12 +56,10 @@ public class StandaloneStateTest {
 
 		StateEngineConfiguration configuration = setupXMLConfiguration();
 
-		System.out
-				.println("testing with XML configuration and immediate state loading");
+		System.out.println("testing with XML configuration and immediate state loading");
 
 		StateManager manager = new DefaultStateManager();
-		manager.initialize(stateContext, configuration,
-				new ImmediateStateEngineLoader());
+		manager.initialize(stateContext, configuration, new ImmediateStateEngineLoader());
 		manager.run();
 
 		Assert.assertEquals(1, stateContext.getData());
@@ -76,12 +74,10 @@ public class StandaloneStateTest {
 
 		StateEngineConfiguration configuration = setupJSONConfiguration();
 
-		System.out
-				.println("testing with JSON configuration and immediate state loading");
+		System.out.println("testing with JSON configuration and immediate state loading");
 
 		StateManager manager = new DefaultStateManager();
-		manager.initialize(stateContext, configuration,
-				new ImmediateStateEngineLoader());
+		manager.initialize(stateContext, configuration, new ImmediateStateEngineLoader());
 		manager.run();
 
 		Assert.assertEquals(1, stateContext.getData());
@@ -99,8 +95,7 @@ public class StandaloneStateTest {
 		System.out.println("testing with immediate state loading");
 
 		StateManager manager = new DefaultStateManager();
-		manager.initialize(stateContext, configuration,
-				new ImmediateStateEngineLoader());
+		manager.initialize(stateContext, configuration, new ImmediateStateEngineLoader());
 		manager.run();
 
 		Assert.assertEquals(1, stateContext.getData());
@@ -118,8 +113,7 @@ public class StandaloneStateTest {
 		System.out.println("testing with prototype state loading");
 
 		StateManager manager = new DefaultStateManager();
-		manager.initialize(stateContext, configuration,
-				new PrototypeStateEngineLoader());
+		manager.initialize(stateContext, configuration, new PrototypeStateEngineLoader());
 		manager.run();
 
 		Assert.assertEquals(1, stateContext.getData());
@@ -146,15 +140,11 @@ public class StandaloneStateTest {
 	private StateEngineConfiguration setupPrototypeConfiguration() {
 		DefaultStateEngineConfiguration configuration = new DefaultStateEngineConfiguration();
 
-		configuration.addState("default",
-				"org.joo.steak.test.states.DefaultTestState");
+		configuration.addState("default", "org.joo.steak.test.states.DefaultTestState");
 		configuration.addState("add", "org.joo.steak.test.states.AddTestState");
-		configuration.addState("multiply",
-				"org.joo.steak.test.states.MultiplyTestState");
-		configuration.addState("subtract",
-				"org.joo.steak.test.states.SubtractTestState");
-		configuration.addState("divide",
-				"org.joo.steak.test.states.DivideTestState");
+		configuration.addState("multiply", "org.joo.steak.test.states.MultiplyTestState");
+		configuration.addState("subtract", "org.joo.steak.test.states.SubtractTestState");
+		configuration.addState("divide", "org.joo.steak.test.states.DivideTestState");
 
 		configuration.addTransition("default", "*", "add");
 		configuration.addTransition("add", "*", "multiply");
@@ -183,15 +173,13 @@ public class StandaloneStateTest {
 
 	private StateEngineConfiguration setupJSONConfiguration() {
 		String config = readFile("src/test/resources/config.json");
-		JSONStateEngineConfigurator configurator = new JSONStateEngineConfigurator(
-				config);
+		JSONStateEngineConfigurator configurator = new JSONStateEngineConfigurator(config);
 		return configurator.getConfiguration();
 	}
 
 	private StateEngineConfiguration setupXMLConfiguration() {
 		String config = readFile("src/test/resources/config.xml");
-		XMLStateEngineConfigurator configurator = new XMLStateEngineConfigurator(
-				config);
+		XMLStateEngineConfigurator configurator = new XMLStateEngineConfigurator(config);
 		return configurator.getConfiguration();
 	}
 

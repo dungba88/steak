@@ -38,7 +38,7 @@ public class HttpAsyncClientManager {
 	private CloseableHttpAsyncClient httpClient;
 
 	private static HttpAsyncClientManager instance;
-	
+
 	private static final Object lock = new Object();
 
 	public static HttpAsyncClientManager getInstance() {
@@ -57,8 +57,7 @@ public class HttpAsyncClientManager {
 		httpClient.start();
 	}
 
-	public Future<HttpResponse> execute(HttpUriRequest request,
-			FutureCallback<HttpResponse> callback) {
+	public Future<HttpResponse> execute(HttpUriRequest request, FutureCallback<HttpResponse> callback) {
 		return httpClient.execute(request, callback);
 	}
 

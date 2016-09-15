@@ -48,8 +48,7 @@ public interface StateManager extends StateChangedListener, StateEngineDispatche
 	 * @param loader
 	 *            the state engine loader
 	 */
-	public void initialize(StateContext stateContext,
-			StateEngineConfiguration configuration, StateEngineLoader loader);
+	public void initialize(StateContext stateContext, StateEngineConfiguration configuration, StateEngineLoader loader);
 
 	/**
 	 * Run the state engine. This will start from initial state, change state
@@ -88,8 +87,7 @@ public interface StateManager extends StateChangedListener, StateEngineDispatche
 	 * @param action
 	 * @return
 	 */
-	public StateTransition[] getTransitionsForState(String stateName,
-			String action);
+	public StateTransition[] getTransitionsForState(String stateName, String action);
 
 	public Map<String, State> getStates();
 

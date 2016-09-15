@@ -49,13 +49,11 @@ public class JSONStateEngineConfigurator implements StateEngineConfigurator {
 
 			return new DefaultStateEngineConfiguration(states, transitions);
 		} catch (JSONException ex) {
-			throw new StateInitializationException(
-					"Invalid JSON configuration", ex);
+			throw new StateInitializationException("Invalid JSON configuration", ex);
 		}
 	}
 
-	private Map<String, Map<String, Object[]>> parseTransitionsJSON(
-			JSONArray transitionsJSON) {
+	private Map<String, Map<String, Object[]>> parseTransitionsJSON(JSONArray transitionsJSON) {
 		Map<String, Map<String, Object[]>> map = new HashMap<>();
 		if (transitionsJSON != null) {
 			for (int i = 0; i < transitionsJSON.length(); i++) {
@@ -65,8 +63,7 @@ public class JSONStateEngineConfigurator implements StateEngineConfigurator {
 				if (!map.containsKey(state)) {
 					map.put(state, new HashMap<String, Object[]>());
 				}
-				JSONArray transitionsArrJSON = transitionJSON
-						.getJSONArray("transitions");
+				JSONArray transitionsArrJSON = transitionJSON.getJSONArray("transitions");
 				Object[] transitions = parseTransitionsArrJSON(transitionsArrJSON);
 				map.get(state).put(action, transitions);
 			}

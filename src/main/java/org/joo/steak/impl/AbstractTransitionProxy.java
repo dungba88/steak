@@ -47,8 +47,7 @@ public abstract class AbstractTransitionProxy implements StateTransition {
 		try {
 			return (StateTransition) ReflectionUtils.loadClass(className);
 		} catch (ClassCastException e) {
-			throw new StateInitializationException("Class " + className
-					+ " is not subclass of State");
+			throw new StateInitializationException("Class " + className + " is not subclass of State");
 		}
 	}
 }
