@@ -14,11 +14,15 @@ public class ExecutorManager {
 	private ExecutorService executor;
 
 	private static ExecutorManager instance;
+	
+	private static final Object lock = new Object();
 
 	public static ExecutorManager getInstance() {
 		if (instance == null) {
-			synchronized (instance) {
-				instance = new ExecutorManager();
+			synchronized (lock) {
+				if (instance == null) {
+					instance = new ExecutorManager();
+				}
 			}
 		}
 		return instance;

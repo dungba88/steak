@@ -20,11 +20,15 @@ public class HttpAsyncClientManager {
 	private CloseableHttpAsyncClient httpClient;
 
 	private static HttpAsyncClientManager instance;
+	
+	private static final Object lock = new Object();
 
 	public static HttpAsyncClientManager getInstance() {
 		if (instance == null) {
-			synchronized (instance) {
-				instance = new HttpAsyncClientManager();
+			synchronized (lock) {
+				if (instance == null) {
+					instance = new HttpAsyncClientManager();
+				}
 			}
 		}
 		return instance;
