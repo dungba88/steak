@@ -38,6 +38,16 @@ public abstract class AbstractState extends AbstractStateChangedDispatcher
 	 * 
 	 * @param action
 	 *            the action that triggers the state change.
+	 */
+	protected void changeState(String action) {
+		dispatchStateChangedEvent(new StateChangedEvent(this, action, null));
+	}
+
+	/**
+	 * Notify <code>StateManager</code> to change the state.
+	 * 
+	 * @param action
+	 *            the action that triggers the state change.
 	 * @param args
 	 *            the arguments used to be passed to <code>StateManager</code>.
 	 */
