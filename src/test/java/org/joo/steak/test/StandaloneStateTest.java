@@ -18,10 +18,10 @@
  */
 package org.joo.steak.test;
 
-import java.io.FileInputStream;
+import java.io.File;
 import java.io.IOException;
 
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.FileUtils;
 import org.joo.steak.framework.StateManager;
 import org.joo.steak.framework.config.StateEngineConfiguration;
 import org.joo.steak.impl.DefaultStateManager;
@@ -184,22 +184,11 @@ public class StandaloneStateTest {
 	}
 
 	private String readFile(String file) {
-		FileInputStream fis = null;
 		try {
-			fis = new FileInputStream(file);
-			String content = IOUtils.toString(fis);
-			return content;
+			return FileUtils.readFileToString(new File(file));
 		} catch (IOException e) {
 			e.printStackTrace();
-		} finally {
-			if (fis != null) {
-				try {
-					fis.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
+			return null;
 		}
-		return null;
 	}
 }
