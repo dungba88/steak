@@ -18,7 +18,6 @@
  */
 package org.joo.steak.impl.event;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +28,7 @@ import org.joo.steak.framework.event.StateEngineListener;
 
 public abstract class AbstractStateEngineDispatcher implements StateEngineDispatcher {
 
-	public List<WeakReference<StateEngineListener>> listeners;
+	public List<StateEngineListener> listeners;
 
 	public AbstractStateEngineDispatcher() {
 		listeners = new ArrayList<>();
@@ -37,7 +36,7 @@ public abstract class AbstractStateEngineDispatcher implements StateEngineDispat
 
 	@Override
 	public void addStateEngineListener(StateEngineListener listener) {
-		listeners.add(new WeakReference<StateEngineListener>(listener));
+		listeners.add(listener);
 	}
 
 	@Override
@@ -49,8 +48,7 @@ public abstract class AbstractStateEngineDispatcher implements StateEngineDispat
 
 	@Override
 	public void dispatchStateEngineStartEvent(StateContext context) {
-		for (WeakReference<StateEngineListener> listenerRef : listeners) {
-			StateEngineListener listener = listenerRef.get();
+		for (StateEngineListener listener : listeners) {
 			if (listener != null) {
 				listener.onStart(context);
 			}
@@ -59,8 +57,7 @@ public abstract class AbstractStateEngineDispatcher implements StateEngineDispat
 
 	@Override
 	public void dispatchStateChangedEvent(StateChangedEvent event) {
-		for (WeakReference<StateEngineListener> listenerRef : listeners) {
-			StateEngineListener listener = listenerRef.get();
+		for (StateEngineListener listener : listeners) {
 			if (listener != null) {
 				listener.onStateChanged(event);
 			}
@@ -69,8 +66,7 @@ public abstract class AbstractStateEngineDispatcher implements StateEngineDispat
 
 	@Override
 	public void dispatchStateEngineFinishEvent(StateChangedEvent event) {
-		for (WeakReference<StateEngineListener> listenerRef : listeners) {
-			StateEngineListener listener = listenerRef.get();
+		for (StateEngineListener listener : listeners) {
 			if (listener != null) {
 				listener.onFinish(event);
 			}
@@ -79,8 +75,7 @@ public abstract class AbstractStateEngineDispatcher implements StateEngineDispat
 
 	protected final int getIndex(StateEngineListener theListener) {
 		int idx = 0;
-		for (WeakReference<StateEngineListener> listenerRef : listeners) {
-			StateEngineListener listener = listenerRef.get();
+		for (StateEngineListener listener : listeners) {
 			if (listener != null && listener.equals(theListener)) {
 				return idx;
 			}

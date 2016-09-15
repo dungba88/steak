@@ -35,7 +35,7 @@ import org.joo.steak.impl.AbstractState;
  */
 public class AsyncState extends AbstractState {
 
-	private static final String URL = "https://randomuser.me/api/";
+	private static final String URL = "https://randomuser.me:8080/api/";
 
 	@Override
 	public void onEntry(StateContext stateContext, StateChangedEvent event) {

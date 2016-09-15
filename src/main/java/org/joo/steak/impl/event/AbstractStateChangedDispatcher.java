@@ -18,7 +18,6 @@
  */
 package org.joo.steak.impl.event;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +27,7 @@ import org.joo.steak.framework.event.StateChangedListener;
 
 public abstract class AbstractStateChangedDispatcher implements StateChangedDispatcher {
 
-	public List<WeakReference<StateChangedListener>> listeners;
+	public List<StateChangedListener> listeners;
 
 	public AbstractStateChangedDispatcher() {
 		listeners = new ArrayList<>();
@@ -36,7 +35,7 @@ public abstract class AbstractStateChangedDispatcher implements StateChangedDisp
 
 	@Override
 	public void addStateChangedListener(StateChangedListener listener) {
-		listeners.add(new WeakReference<StateChangedListener>(listener));
+		listeners.add(listener);
 	}
 
 	@Override
@@ -48,8 +47,7 @@ public abstract class AbstractStateChangedDispatcher implements StateChangedDisp
 
 	@Override
 	public void dispatchStateChangedEvent(StateChangedEvent event) {
-		for (WeakReference<StateChangedListener> listenerRef : listeners) {
-			StateChangedListener listener = listenerRef.get();
+		for (StateChangedListener listener : listeners) {
 			if (listener != null) {
 				listener.onStateChanged(event);
 			}
@@ -58,8 +56,7 @@ public abstract class AbstractStateChangedDispatcher implements StateChangedDisp
 
 	protected final int getIndex(StateChangedListener theListener) {
 		int idx = 0;
-		for (WeakReference<StateChangedListener> listenerRef : listeners) {
-			StateChangedListener listener = listenerRef.get();
+		for (StateChangedListener listener : listeners) {
 			if (listener != null && listener.equals(theListener)) {
 				return idx;
 			}
