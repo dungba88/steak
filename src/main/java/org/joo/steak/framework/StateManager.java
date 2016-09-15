@@ -89,7 +89,17 @@ public interface StateManager extends StateChangedListener, StateEngineDispatche
 	 */
 	public StateTransition[] getTransitionsForState(String stateName, String action);
 
+	/**
+	 * Get the states map
+	 * 
+	 * @return the states map
+	 */
 	public Map<String, State> getStates();
 
+	/**
+	 * Get the transitions map
+	 * 
+	 * @return the transitions map
+	 */
 	public Map<String, Map<String, StateTransition[]>> getStateTransitions();
 }
