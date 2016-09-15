@@ -59,6 +59,16 @@ public abstract class AbstractStateEngineDispatcher implements
 	}
 	
 	@Override
+	public void dispatchStateChangedEvent(StateChangedEvent event) {
+		for (WeakReference<StateEngineListener> listenerRef : listeners) {
+			StateEngineListener listener = listenerRef.get();
+			if (listener != null) {
+				listener.onStateChanged(event);
+			}
+		}
+	}
+	
+	@Override
 	public void dispatchStateEngineFinishEvent(StateChangedEvent event) {
 		for (WeakReference<StateEngineListener> listenerRef : listeners) {
 			StateEngineListener listener = listenerRef.get();

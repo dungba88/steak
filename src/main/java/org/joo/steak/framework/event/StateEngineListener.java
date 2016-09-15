@@ -26,7 +26,7 @@ import org.joo.steak.framework.StateContext;
  * @author griever
  *
  */
-public interface StateEngineListener {
+public interface StateEngineListener extends StateChangedListener {
 
 	/**
 	 * Called when the state engine starts
@@ -35,7 +35,7 @@ public interface StateEngineListener {
 	 *            the <code>StateEngineEvent</code>
 	 */
 	public void onStart(StateContext stateContext);
-
+	
 	/**
 	 * Called when the state engine finishes
 	 * 
