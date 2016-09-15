@@ -24,16 +24,16 @@ import java.util.Map;
 import org.joo.steak.framework.StateContext;
 
 public class DefaultStateContext implements StateContext {
-	
+
 	private String initialState;
-	
+
 	private HashMap<String, Object> contextMap;
-	
+
 	public DefaultStateContext(String initialState) {
 		this.initialState = initialState;
 		this.contextMap = new HashMap<>();
 	}
-	
+
 	@Override
 	public String getInitialState() {
 		return initialState;

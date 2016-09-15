@@ -23,7 +23,7 @@ import org.joo.steak.framework.event.StateChangedEvent;
 import org.joo.steak.impl.AbstractState;
 
 public class SubtractTestState extends AbstractState {
-	
+
 	public SubtractTestState() {
 		System.out.println("creating subtract test state");
 	}

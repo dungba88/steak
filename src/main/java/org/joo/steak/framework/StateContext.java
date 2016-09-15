@@ -21,21 +21,24 @@ package org.joo.steak.framework;
 import java.util.Map;
 
 /**
- * A state context is an object to be passed amongst <code>State</code>. 
- * It should be unique for each run of <code>StateManager</code>.
+ * A state context is an object to be passed amongst <code>State</code>. It
+ * should be unique for each run of <code>StateManager</code>.
+ * 
  * @author griever
  *
  */
 public interface StateContext {
-	
+
 	/**
 	 * Get the initial state
+	 * 
 	 * @return the initial state
 	 */
 	public String getInitialState();
-	
+
 	/**
 	 * Get context map which may contains additional data
+	 * 
 	 * @return the context map
 	 */
 	public Map<String, Object> getContextMap();

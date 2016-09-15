@@ -32,18 +32,20 @@ public class DefaultStateManager extends AbstractStateManager {
 	public void doRun() {
 		super.changeNextState(getInitialState(), null);
 	}
-	
+
 	@Override
 	public void onStateChanged(StateChangedEvent event) {
 		if (event == null)
 			return;
-		
+
 		State currentState = getState(getCurrentState());
 		State state = (State) event.getSource();
 		if (state != currentState)
-			throw new IllegalArgumentException("StateChangedEvent was raised with invalid state");
+			throw new IllegalArgumentException(
+					"StateChangedEvent was raised with invalid state");
 
-		StateTransition[] transitions = getTransitionsForState(getCurrentState(), event.getAction());
+		StateTransition[] transitions = getTransitionsForState(
+				getCurrentState(), event.getAction());
 		String nextStateId = null;
 		for (StateTransition transition : transitions) {
 			if (transition.isSatisfiedBy(event.getArgs())) {
@@ -57,9 +59,9 @@ public class DefaultStateManager extends AbstractStateManager {
 
 	@Override
 	protected void doInitialization(StateEngineConfiguration configuration) {
-		
+
 	}
-	
+
 	@Override
 	protected Map<String, State> doInitializeStatesMap() {
 		return new WeakHashMap<>();

@@ -26,19 +26,20 @@ import org.joo.steak.framework.event.StateChangedDispatcher;
 import org.joo.steak.framework.event.StateChangedEvent;
 import org.joo.steak.framework.event.StateChangedListener;
 
-public abstract class AbstractStateChangedDispatcher implements StateChangedDispatcher {
+public abstract class AbstractStateChangedDispatcher implements
+		StateChangedDispatcher {
 
 	public List<WeakReference<StateChangedListener>> listeners;
-	
+
 	public AbstractStateChangedDispatcher() {
 		listeners = new ArrayList<>();
 	}
-	
+
 	@Override
 	public void addStateChangedListener(StateChangedListener listener) {
 		listeners.add(new WeakReference<StateChangedListener>(listener));
 	}
-	
+
 	@Override
 	public void removeStateChangedListener(StateChangedListener listener) {
 		int idx = getIndex(listener);
@@ -55,7 +56,7 @@ public abstract class AbstractStateChangedDispatcher implements StateChangedDisp
 			}
 		}
 	}
-	
+
 	protected final int getIndex(StateChangedListener theListener) {
 		int idx = 0;
 		for (WeakReference<StateChangedListener> listenerRef : listeners) {

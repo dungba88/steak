@@ -131,14 +131,14 @@ public abstract class AbstractStateManager implements StateManager {
 
 	protected abstract Map<String, State> doInitializeStatesMap();
 
-	protected abstract void doRun();
-
 	protected abstract Map<String, StateTransition[]> doInitializeTransitionMap();
 
 	protected abstract Map<String, Map<String, StateTransition[]>> doInitializeTransitionsMap();
 
 	protected abstract void doInitialization(
 			StateEngineConfiguration configuration);
+
+	protected abstract void doRun();
 
 	@Override
 	public State getState(String stateName) {

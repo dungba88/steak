@@ -21,7 +21,7 @@ package org.joo.steak.test.states;
 import org.joo.steak.impl.DefaultStateContext;
 
 public class TestStateContext extends DefaultStateContext {
-	
+
 	private int data;
 
 	public TestStateContext(String initialState, int data) {
