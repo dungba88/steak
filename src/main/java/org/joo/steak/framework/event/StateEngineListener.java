@@ -16,30 +16,32 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.joo.steak.test.states;
+package org.joo.steak.framework.event;
 
 import org.joo.steak.framework.StateContext;
-import org.joo.steak.framework.event.StateChangedEvent;
-import org.joo.steak.impl.AbstractState;
 
-public class SubtractTestState extends AbstractState {
+/**
+ * A listener who will receive <code>StateEngineEvent</code>
+ * 
+ * @author griever
+ *
+ */
+public interface StateEngineListener extends StateChangedListener {
 
-	public SubtractTestState() {
-		System.out.println("creating subtract test state");
-	}
-
-	@Override
-	public void onEntry(StateContext stateContext, StateChangedEvent event) {
-		System.out.println("entering subtract test state");
-		TestStateContext testStateContext = (TestStateContext) stateContext;
-		testStateContext.substractData(2);
-		System.out.println("current data: " + testStateContext.getData());
-		changeState("done", null);
-	}
-
-	@Override
-	public void onExit(StateChangedEvent event) {
-		System.out.println("exiting subtract test state");
-		System.out.println("");
-	}
+	/**
+	 * Called when the state engine starts
+	 * 
+	 * @param event
+	 *            the <code>StateEngineEvent</code>
+	 */
+	public void onStart(StateContext stateContext);
+	
+	/**
+	 * Called when the state engine finishes
+	 * 
+	 * @param event
+	 *            the <code>StateChangedEvent</code> dispatched before the state
+	 *            engine exit
+	 */
+	public void onFinish(StateChangedEvent event);
 }

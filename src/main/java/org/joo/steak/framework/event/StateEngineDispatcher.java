@@ -18,38 +18,56 @@
  */
 package org.joo.steak.framework.event;
 
+import org.joo.steak.framework.StateContext;
+
 /**
- * This is mainly used by <code>State</code> to dispatch
- * <code>StateChangedEvent</code> to <code>StateManager</code> when it finishes
- * its task and want to move on.
+ * This is mainly used by <code>StateManager</code> to dispatch an event when it
+ * starts/finishes
  * 
  * @author griever
  *
  */
-public interface StateChangedDispatcher {
+public interface StateEngineDispatcher {
 
 	/**
-	 * Add a listener for <code>StateChangedEvent</code>
+	 * Add a listener for <code>StateEngineEvent</code>
 	 * 
 	 * @param listener
 	 *            the listener to be added
 	 */
-	public void addStateChangedListener(StateChangedListener listener);
+	public void addStateEngineListener(StateEngineListener listener);
 
 	/**
-	 * Remove a listener so that it will no longer receive
-	 * <code>StateChangedEvent</code>
+	 * Remove a listener so that it will no longer receive state engine event
 	 * 
 	 * @param listener
 	 *            the listener to be removed
 	 */
-	public void removeStateChangedListener(StateChangedListener listener);
+	public void removeStateEngineListener(StateEngineListener listener);
 
 	/**
-	 * Dispatch a <code>StateChangedEvent</code> to all listeners
+	 * Dispatch an event to all listeners when the state engine starts
+	 * 
+	 * @param stateContext
+	 *            the context
+	 */
+	public void dispatchStateEngineStartEvent(StateContext stateContext);
+	
+	/**
+	 * Dispatch a <code>StateChangedEvent</code> to all listeners when the state
+	 * changed
 	 * 
 	 * @param event
 	 *            the event
 	 */
 	public void dispatchStateChangedEvent(StateChangedEvent event);
+
+	/**
+	 * Dispatch a <code>StateChangedEvent</code> to all listeners when the state
+	 * engine finishes
+	 * 
+	 * @param event
+	 *            the event
+	 */
+	public void dispatchStateEngineFinishEvent(StateChangedEvent event);
 }

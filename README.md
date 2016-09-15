@@ -72,4 +72,4 @@ Of course you can use your own `StateTransition`!
 
 ## JSON and XML configuration
 
-JSON and XML configuration are supported. Please check `src/test/resources/config.json` and `src/test/resources/config.xml` for more details.
+JSON and XML configuration are supported. Please check [src/test/resources/config.json](https://github.com/dungba88/steak/blob/master/src/test/resources/config.json) and [src/test/resources/config.xml](https://github.com/dungba88/steak/blob/master/src/test/resources/config.xml) for more details.

@@ -22,45 +22,66 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joo.steak.framework.event.StateChangedDispatcher;
+import org.joo.steak.framework.StateContext;
 import org.joo.steak.framework.event.StateChangedEvent;
-import org.joo.steak.framework.event.StateChangedListener;
+import org.joo.steak.framework.event.StateEngineDispatcher;
+import org.joo.steak.framework.event.StateEngineListener;
 
-public abstract class AbstractStateChangedDispatcher implements
-		StateChangedDispatcher {
+public abstract class AbstractStateEngineDispatcher implements
+		StateEngineDispatcher {
 
-	public List<WeakReference<StateChangedListener>> listeners;
+	public List<WeakReference<StateEngineListener>> listeners;
 
-	public AbstractStateChangedDispatcher() {
+	public AbstractStateEngineDispatcher() {
 		listeners = new ArrayList<>();
 	}
 
 	@Override
-	public void addStateChangedListener(StateChangedListener listener) {
-		listeners.add(new WeakReference<StateChangedListener>(listener));
+	public void addStateEngineListener(StateEngineListener listener) {
+		listeners.add(new WeakReference<StateEngineListener>(listener));
 	}
 
 	@Override
-	public void removeStateChangedListener(StateChangedListener listener) {
+	public void removeStateEngineListener(StateEngineListener listener) {
 		int idx = getIndex(listener);
 		if (idx != -1)
 			listeners.remove(idx);
 	}
 
 	@Override
+	public void dispatchStateEngineStartEvent(StateContext context) {
+		for (WeakReference<StateEngineListener> listenerRef : listeners) {
+			StateEngineListener listener = listenerRef.get();
+			if (listener != null) {
+				listener.onStart(context);
+			}
+		}
+	}
+	
+	@Override
 	public void dispatchStateChangedEvent(StateChangedEvent event) {
-		for (WeakReference<StateChangedListener> listenerRef : listeners) {
-			StateChangedListener listener = listenerRef.get();
+		for (WeakReference<StateEngineListener> listenerRef : listeners) {
+			StateEngineListener listener = listenerRef.get();
 			if (listener != null) {
 				listener.onStateChanged(event);
 			}
 		}
 	}
+	
+	@Override
+	public void dispatchStateEngineFinishEvent(StateChangedEvent event) {
+		for (WeakReference<StateEngineListener> listenerRef : listeners) {
+			StateEngineListener listener = listenerRef.get();
+			if (listener != null) {
+				listener.onFinish(event);
+			}
+		}
+	}
 
-	protected final int getIndex(StateChangedListener theListener) {
+	protected final int getIndex(StateEngineListener theListener) {
 		int idx = 0;
-		for (WeakReference<StateChangedListener> listenerRef : listeners) {
-			StateChangedListener listener = listenerRef.get();
+		for (WeakReference<StateEngineListener> listenerRef : listeners) {
+			StateEngineListener listener = listenerRef.get();
 			if (listener != null && listener.equals(theListener)) {
 				return idx;
 			}

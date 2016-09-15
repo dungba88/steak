@@ -23,7 +23,7 @@ import org.joo.steak.framework.event.StateChangedEvent;
 import org.joo.steak.impl.AbstractState;
 
 public class DivideTestState extends AbstractState {
-	
+
 	public DivideTestState() {
 		System.out.println("creating divide test state");
 	}

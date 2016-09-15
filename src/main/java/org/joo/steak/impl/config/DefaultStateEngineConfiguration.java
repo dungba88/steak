@@ -23,7 +23,8 @@ import java.util.WeakHashMap;
 
 import org.joo.steak.framework.config.StateEngineConfiguration;
 
-public class DefaultStateEngineConfiguration implements StateEngineConfiguration {
+public class DefaultStateEngineConfiguration implements
+		StateEngineConfiguration {
 
 	private Map<String, Object> statesConfig;
 	private Map<String, Map<String, Object[]>> transitionsConfig;

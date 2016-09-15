@@ -63,7 +63,7 @@ public class AsyncState extends AbstractState {
 				changeStateInNewThread("fail", e);
 			}
 
-			private void changeStateInNewThread(String action, Object args) {
+			private void changeStateInNewThread(final String action, final Object args) {
 				// change the state in new thread, since we don't want to use
 				// HttpAsynceClient I/O dispatcher thread for too long
 				ExecutorManager.getInstance().execute(new Runnable() {

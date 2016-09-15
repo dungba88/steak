@@ -24,16 +24,16 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.joo.steak.framework.StateContext;
 
 public abstract class ConcurrentStateContext implements StateContext {
-	
+
 	private String initialState;
-	
+
 	private ConcurrentHashMap<String, Object> contextMap;
-	
+
 	public ConcurrentStateContext(String initialState) {
 		this.initialState = initialState;
 		this.contextMap = new ConcurrentHashMap<>();
 	}
-	
+
 	@Override
 	public String getInitialState() {
 		return initialState;

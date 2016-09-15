@@ -20,9 +20,34 @@ package org.joo.steak.framework.config;
 
 import java.util.Map;
 
+/**
+ * Interface for state engine configuration It will be used by
+ * <code>StateManager</code> to load the desired <code>State</code> and
+ * <code>StateTransition</code>
+ * 
+ * @author griever
+ *
+ */
 public interface StateEngineConfiguration {
-	
+
+	/**
+	 * Get the state configurations. This is a map from state name to state
+	 * configuration object. The configuration object can be <code>String</code>
+	 * or a <code>State</code> instance. This loaded by
+	 * <code>StateEngineLoader</code>
+	 * 
+	 * @return the state configurations
+	 */
 	public Map<String, Object> getStatesConfig();
-	
+
+	/**
+	 * Get the transition configurations. This is a 2-level map from state name
+	 * to state transitions. The second level map key indicates the action that
+	 * triggers the state change. And the value indicates a transition list.
+	 * Usually if the transition is string, it will be converted to
+	 * <code>SimpleStateTransition</code>
+	 * 
+	 * @return
+	 */
 	public Map<String, Map<String, Object[]>> getTransitionsConfig();
 }

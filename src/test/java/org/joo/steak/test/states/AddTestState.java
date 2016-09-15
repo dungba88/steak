@@ -23,7 +23,7 @@ import org.joo.steak.framework.event.StateChangedEvent;
 import org.joo.steak.impl.AbstractState;
 
 public class AddTestState extends AbstractState {
-	
+
 	public AddTestState() {
 		System.out.println("creating add test state");
 	}

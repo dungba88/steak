@@ -22,9 +22,9 @@ import org.joo.steak.framework.StateTransition;
 import org.joo.steak.impl.AbstractTransitionProxy;
 
 public class TransitionLazyLoadProxy extends AbstractTransitionProxy {
-	
+
 	private StateTransition transition;
-	
+
 	public TransitionLazyLoadProxy(String className) {
 		super(className);
 	}

@@ -24,7 +24,7 @@ import org.joo.steak.framework.event.StateChangedEvent;
 import org.joo.steak.impl.AbstractStateProxy;
 
 public class StatePrototypeProxy extends AbstractStateProxy {
-	
+
 	public StatePrototypeProxy(String stateClassName) {
 		super(stateClassName);
 	}

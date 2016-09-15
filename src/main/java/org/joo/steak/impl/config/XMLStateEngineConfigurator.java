@@ -69,7 +69,8 @@ public class XMLStateEngineConfigurator implements StateEngineConfigurator {
 			NodeList stateNodeList = fetchNodeList(doc, "/config/states/state");
 			Map<String, Object> states = parseStatesXML(stateNodeList);
 
-			NodeList transitionsNodeList = fetchNodeList(doc, "/config/flows/flow");
+			NodeList transitionsNodeList = fetchNodeList(doc,
+					"/config/flows/flow");
 
 			Map<String, Map<String, Object[]>> transitions = parseTransitionsXML(transitionsNodeList);
 
