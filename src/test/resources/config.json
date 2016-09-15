@@ -1,38 +1,38 @@
 {
-	states: [{
-		name: "default",
-		value: "org.joo.steak.test.states.DefaultTestState"
+	"states": [{
+		"name": "default",
+		"value": "org.joo.steak.test.states.DefaultTestState"
 	}, {
-		name: "add",
-		value: "org.joo.steak.test.states.AddTestState"
+		"name": "add",
+		"value": "org.joo.steak.test.states.AddTestState"
 	}, {
-		name: "multiply",
-		value: "org.joo.steak.test.states.MultiplyTestState"
+		"name": "multiply",
+		"value": "org.joo.steak.test.states.MultiplyTestState"
 	}, {
-		name: "subtract",
-		value: "org.joo.steak.test.states.SubtractTestState"
+		"name": "subtract",
+		"value": "org.joo.steak.test.states.SubtractTestState"
 	}, {
-		name: "divide",
-		value: "org.joo.steak.test.states.DivideTestState"
+		"name": "divide",
+		"value": "org.joo.steak.test.states.DivideTestState"
 	}],
-	flows: [{
-		from: "default",
-		action: "*",
-		transitions: ["add"]
+	"flows": [{
+		"from": "default",
+		"action": "*",
+		"transitions": ["add"]
 	},
 	{
-		from: "add",
-		action: "*",
-		transitions: ["multiply"]
+		"from": "add",
+		"action": "*",
+		"transitions": ["multiply"]
 	},
 	{
-		from: "multiply",
-		action: "*",
-		transitions: ["subtract"]
+		"from": "multiply",
+		"action": "*",
+		"transitions": ["subtract"]
 	},
 	{
-		from: "subtract",
-		action: "*",
-		transitions: ["divide"]
+		"from": "subtract",
+		"action": "*",
+		"transitions": ["divide"]
 	}]
 }
