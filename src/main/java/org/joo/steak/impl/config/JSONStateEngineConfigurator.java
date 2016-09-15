@@ -21,9 +21,9 @@ package org.joo.steak.impl.config;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.joo.steak.framework.StateInitializationException;
 import org.joo.steak.framework.config.StateEngineConfiguration;
 import org.joo.steak.framework.config.StateEngineConfigurator;
+import org.joo.steak.framework.exception.StateInitializationException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

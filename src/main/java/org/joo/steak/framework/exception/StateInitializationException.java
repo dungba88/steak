@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.joo.steak.framework;
+package org.joo.steak.framework.exception;
 
 /**
  * This exception is thrown in initialization method of

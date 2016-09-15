@@ -19,7 +19,7 @@
 package org.joo.steak.impl;
 
 import org.joo.steak.framework.State;
-import org.joo.steak.framework.StateInitializationException;
+import org.joo.steak.framework.exception.StateInitializationException;
 import org.joo.steak.impl.event.AbstractStateChangedDispatcher;
 import org.joo.steak.impl.event.StateChangedListenerDispatcherProxy;
 
