@@ -32,9 +32,9 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import org.joo.steak.framework.StateInitializationException;
 import org.joo.steak.framework.config.StateEngineConfiguration;
 import org.joo.steak.framework.config.StateEngineConfigurator;
+import org.joo.steak.framework.exception.StateInitializationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
