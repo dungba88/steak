@@ -19,11 +19,22 @@
 package org.joo.steak.impl.loader;
 
 import org.joo.steak.framework.State;
+import org.joo.steak.impl.ReflectionUtils;
 
+/**
+ * Default implementation of <code>StateEngineLoader</code>. If the passed
+ * configuration is already <code>State</code> object, it will just return the
+ * instance, otherwise it will try to treat the configuration as class name.
+ * 
+ * @author griever
+ *
+ */
 public class DefaultStateEngineLoader extends AbstractStateEngineLoader {
 
 	@Override
 	public State loadState(Object stateConfig) {
-		return (State) stateConfig;
+		if (stateConfig instanceof State)
+			return (State) stateConfig;
+		return (State) ReflectionUtils.loadClass(stateConfig.toString());
 	}
 }
