@@ -7,12 +7,14 @@
 	<version>0.1.0</version>
 
 	<dependencies>
+		<!-- used for main project -->
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20160810</version>
 		</dependency>
 
+		<!-- used for testing -->
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
@@ -25,6 +27,7 @@
 			<version>4.12</version>
 		</dependency>
 
+		<!-- used for example -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpasyncclient</artifactId>
