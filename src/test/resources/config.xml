@@ -1,4 +1,5 @@
-<config>
+<?xml version="1.0" ?>
+<config xsi:schemaLocation="http://joo.org/steak steak-0.1.0.xsd">
 	<states>
 		<state>
 			<name>default</name>
@@ -24,6 +25,7 @@
 	<flows>
 		<flow>
 			<from>default</from>
+			<action>123</action>
 			<action>*</action>
 			<transitions>
 				<transition>add</transition>

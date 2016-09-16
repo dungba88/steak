@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://joo.org/steak">
+
+	<xs:element name="name" type="xs:string" />
+	<xs:element name="value" type="xs:string" />
+
+	<xs:element name="from" type="xs:string" />
+	<xs:element name="action" type="xs:string" />
+	<xs:element name="transition" type="xs:string" />
+
+	<xs:element name="state">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="name" maxOccurs="1" minOccurs="1" />
+				<xs:element ref="value" maxOccurs="1" minOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="states">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="state" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="transitions">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="transition" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="flow">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="from" maxOccurs="1" minOccurs="1" />
+				<xs:element ref="action" maxOccurs="1" minOccurs="1" />
+				<xs:element ref="transitions" maxOccurs="1" minOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="flows">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="flow" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="config">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="states" maxOccurs="1" minOccurs="1" />
+				<xs:element ref="flows" maxOccurs="1" minOccurs="0" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
