@@ -26,7 +26,7 @@ import java.util.EventObject;
  * @author griever
  *
  */
-public class StateChangedEvent extends EventObject {
+public class StateChangeEvent extends EventObject {
 
 	private static final long serialVersionUID = -3857604936551420446L;
 
@@ -34,7 +34,7 @@ public class StateChangedEvent extends EventObject {
 
 	private Object args;
 
-	public StateChangedEvent(Object source, String action, Object args) {
+	public StateChangeEvent(Object source, String action, Object args) {
 		super(source);
 		this.action = action;
 		this.args = args;

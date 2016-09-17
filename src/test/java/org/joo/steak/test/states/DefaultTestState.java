@@ -19,7 +19,7 @@
 package org.joo.steak.test.states;
 
 import org.joo.steak.framework.StateContext;
-import org.joo.steak.framework.event.StateChangedEvent;
+import org.joo.steak.framework.event.StateChangeEvent;
 import org.joo.steak.impl.AbstractState;
 
 public class DefaultTestState extends AbstractState {
@@ -29,7 +29,7 @@ public class DefaultTestState extends AbstractState {
 	}
 
 	@Override
-	public void onEntry(StateContext stateContext, StateChangedEvent event) {
+	public void onEntry(StateContext stateContext, StateChangeEvent event) {
 		System.out.println("entering default test state");
 		TestStateContext testStateContext = (TestStateContext) stateContext;
 		System.out.println("current data: " + testStateContext.getData());
@@ -37,7 +37,7 @@ public class DefaultTestState extends AbstractState {
 	}
 
 	@Override
-	public void onExit(StateChangedEvent event) {
+	public void onExit(StateChangeEvent event) {
 		System.out.println("exiting default test state");
 		System.out.println("");
 	}

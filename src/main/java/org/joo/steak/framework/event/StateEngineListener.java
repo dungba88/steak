@@ -43,5 +43,5 @@ public interface StateEngineListener extends StateChangedListener {
 	 *            the <code>StateChangedEvent</code> dispatched before the state
 	 *            engine exit
 	 */
-	public void onFinish(StateChangedEvent event);
+	public void onFinish(StateChangeEvent event);
 }

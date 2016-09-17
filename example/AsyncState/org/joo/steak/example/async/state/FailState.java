@@ -19,7 +19,7 @@
 package org.joo.steak.example.async.state;
 
 import org.joo.steak.framework.StateContext;
-import org.joo.steak.framework.event.StateChangedEvent;
+import org.joo.steak.framework.event.StateChangeEvent;
 import org.joo.steak.impl.AbstractState;
 
 /**
@@ -31,13 +31,13 @@ import org.joo.steak.impl.AbstractState;
 public class FailState extends AbstractState {
 
 	@Override
-	public void onEntry(StateContext stateContext, StateChangedEvent event) {
+	public void onEntry(StateContext stateContext, StateChangeEvent event) {
 		System.out.println("Fail to execute HTTP request");
 		changeState("exit", event);
 	}
 
 	@Override
-	public void onExit(StateChangedEvent event) {
+	public void onExit(StateChangeEvent event) {
 
 	}
 }

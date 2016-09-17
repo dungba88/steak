@@ -27,7 +27,7 @@ import org.joo.steak.framework.StateContext;
 import org.joo.steak.framework.StateManager;
 import org.joo.steak.framework.StateTransition;
 import org.joo.steak.framework.config.StateEngineConfiguration;
-import org.joo.steak.framework.event.StateChangedEvent;
+import org.joo.steak.framework.event.StateChangeEvent;
 import org.joo.steak.framework.loader.StateEngineLoader;
 import org.joo.steak.impl.event.AbstractStateEngineDispatcher;
 import org.joo.steak.impl.loader.DefaultStateEngineLoader;
@@ -156,13 +156,15 @@ public abstract class AbstractStateManager extends AbstractStateEngineDispatcher
 		return new StateTransition[0];
 	}
 
-	protected void changeNextState(String nextStateId, StateChangedEvent event) {
+	protected void changeNextState(String nextStateId, StateChangeEvent event) {
 		if (currentState != null) {
 			State currentStateObj = getState(currentState);
 			if (currentStateObj != null) {
 				currentStateObj.onExit(event);
 			}
 		}
+
+		dispatchStateChangeEvent(event);
 
 		State nextState = getState(nextStateId);
 		if (nextState != null) {

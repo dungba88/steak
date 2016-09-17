@@ -19,7 +19,7 @@
 package org.joo.steak.impl.event;
 
 import org.joo.steak.framework.event.StateChangedDispatcher;
-import org.joo.steak.framework.event.StateChangedEvent;
+import org.joo.steak.framework.event.StateChangeEvent;
 import org.joo.steak.framework.event.StateChangedListener;
 
 public class StateChangedListenerDispatcherProxy implements StateChangedListener {
@@ -31,8 +31,8 @@ public class StateChangedListenerDispatcherProxy implements StateChangedListener
 	}
 
 	@Override
-	public void onStateChanged(StateChangedEvent event) {
-		StateChangedEvent custEvent = new StateChangedEvent(wrappee, event.getAction(), event.getArgs());
+	public void onStateChange(StateChangeEvent event) {
+		StateChangeEvent custEvent = new StateChangeEvent(wrappee, event.getAction(), event.getArgs());
 		wrappee.dispatchStateChangedEvent(custEvent);
 	}
 }

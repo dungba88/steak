@@ -19,7 +19,7 @@
 package org.joo.steak.impl;
 
 import org.joo.steak.framework.State;
-import org.joo.steak.framework.event.StateChangedEvent;
+import org.joo.steak.framework.event.StateChangeEvent;
 import org.joo.steak.impl.event.AbstractStateChangedDispatcher;
 
 /**
@@ -39,7 +39,7 @@ public abstract class AbstractState extends AbstractStateChangedDispatcher imple
 	 *            the action that triggers the state change.
 	 */
 	protected void changeState(String action) {
-		dispatchStateChangedEvent(new StateChangedEvent(this, action, null));
+		dispatchStateChangedEvent(new StateChangeEvent(this, action, null));
 	}
 
 	/**
@@ -51,6 +51,6 @@ public abstract class AbstractState extends AbstractStateChangedDispatcher imple
 	 *            the arguments used to be passed to <code>StateManager</code>.
 	 */
 	protected void changeState(String action, Object args) {
-		dispatchStateChangedEvent(new StateChangedEvent(this, action, args));
+		dispatchStateChangedEvent(new StateChangeEvent(this, action, args));
 	}
 }

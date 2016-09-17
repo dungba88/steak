@@ -34,5 +34,5 @@ public interface StateChangedListener {
 	 * @param event
 	 *            the <code>StateChangedEvent</code>
 	 */
-	public void onStateChanged(StateChangedEvent event);
+	public void onStateChange(StateChangeEvent event);
 }

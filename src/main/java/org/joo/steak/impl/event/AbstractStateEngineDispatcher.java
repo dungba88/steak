@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.joo.steak.framework.StateContext;
-import org.joo.steak.framework.event.StateChangedEvent;
+import org.joo.steak.framework.event.StateChangeEvent;
 import org.joo.steak.framework.event.StateEngineDispatcher;
 import org.joo.steak.framework.event.StateEngineListener;
 
@@ -56,16 +56,16 @@ public abstract class AbstractStateEngineDispatcher implements StateEngineDispat
 	}
 
 	@Override
-	public void dispatchStateChangedEvent(StateChangedEvent event) {
+	public void dispatchStateChangeEvent(StateChangeEvent event) {
 		for (StateEngineListener listener : listeners) {
 			if (listener != null) {
-				listener.onStateChanged(event);
+				listener.onStateChange(event);
 			}
 		}
 	}
 
 	@Override
-	public void dispatchStateEngineFinishEvent(StateChangedEvent event) {
+	public void dispatchStateEngineFinishEvent(StateChangeEvent event) {
 		for (StateEngineListener listener : listeners) {
 			if (listener != null) {
 				listener.onFinish(event);

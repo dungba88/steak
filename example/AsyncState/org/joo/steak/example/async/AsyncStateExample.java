@@ -27,7 +27,7 @@ import org.joo.steak.example.async.thread.HttpAsyncClientManager;
 import org.joo.steak.framework.StateContext;
 import org.joo.steak.framework.StateManager;
 import org.joo.steak.framework.config.StateEngineConfiguration;
-import org.joo.steak.framework.event.StateChangedEvent;
+import org.joo.steak.framework.event.StateChangeEvent;
 import org.joo.steak.framework.event.StateEngineListener;
 import org.joo.steak.impl.DefaultStateContext;
 import org.joo.steak.impl.DefaultStateManager;
@@ -67,7 +67,7 @@ public class AsyncStateExample {
 		stateManager.addStateEngineListener(new StateEngineListener() {
 
 			@Override
-			public void onStateChanged(StateChangedEvent event) {
+			public void onStateChange(StateChangeEvent event) {
 
 			}
 
@@ -77,7 +77,7 @@ public class AsyncStateExample {
 			}
 
 			@Override
-			public void onFinish(StateChangedEvent event) {
+			public void onFinish(StateChangeEvent event) {
 				System.out.println("State engine finishes");
 
 				// cleaning up resources

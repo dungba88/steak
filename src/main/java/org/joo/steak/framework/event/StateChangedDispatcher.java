@@ -51,5 +51,5 @@ public interface StateChangedDispatcher {
 	 * @param event
 	 *            the event
 	 */
-	public void dispatchStateChangedEvent(StateChangedEvent event);
+	public void dispatchStateChangedEvent(StateChangeEvent event);
 }

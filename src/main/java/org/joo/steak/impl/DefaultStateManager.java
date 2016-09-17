@@ -24,7 +24,7 @@ import java.util.WeakHashMap;
 import org.joo.steak.framework.State;
 import org.joo.steak.framework.StateTransition;
 import org.joo.steak.framework.config.StateEngineConfiguration;
-import org.joo.steak.framework.event.StateChangedEvent;
+import org.joo.steak.framework.event.StateChangeEvent;
 
 public class DefaultStateManager extends AbstractStateManager {
 
@@ -34,7 +34,7 @@ public class DefaultStateManager extends AbstractStateManager {
 	}
 
 	@Override
-	public void onStateChanged(StateChangedEvent event) {
+	public void onStateChange(StateChangeEvent event) {
 		if (event == null)
 			return;
 

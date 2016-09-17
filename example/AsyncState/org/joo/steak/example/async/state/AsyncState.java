@@ -24,7 +24,7 @@ import org.apache.http.concurrent.FutureCallback;
 import org.joo.steak.example.async.thread.ExecutorManager;
 import org.joo.steak.example.async.thread.HttpAsyncClientManager;
 import org.joo.steak.framework.StateContext;
-import org.joo.steak.framework.event.StateChangedEvent;
+import org.joo.steak.framework.event.StateChangeEvent;
 import org.joo.steak.impl.AbstractState;
 
 /**
@@ -38,7 +38,7 @@ public class AsyncState extends AbstractState {
 	private static final String URL = "https://randomuser.me:8080/api/";
 
 	@Override
-	public void onEntry(StateContext stateContext, StateChangedEvent event) {
+	public void onEntry(StateContext stateContext, StateChangeEvent event) {
 		// create and execute a request
 		System.out.println("starting HTTP request");
 		HttpGet request = new HttpGet(URL);
@@ -76,7 +76,7 @@ public class AsyncState extends AbstractState {
 	}
 
 	@Override
-	public void onExit(StateChangedEvent event) {
+	public void onExit(StateChangeEvent event) {
 
 	}
 }

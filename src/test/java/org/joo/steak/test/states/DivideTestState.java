@@ -19,7 +19,7 @@
 package org.joo.steak.test.states;
 
 import org.joo.steak.framework.StateContext;
-import org.joo.steak.framework.event.StateChangedEvent;
+import org.joo.steak.framework.event.StateChangeEvent;
 import org.joo.steak.impl.AbstractState;
 
 public class DivideTestState extends AbstractState {
@@ -29,7 +29,7 @@ public class DivideTestState extends AbstractState {
 	}
 
 	@Override
-	public void onEntry(StateContext stateContext, StateChangedEvent event) {
+	public void onEntry(StateContext stateContext, StateChangeEvent event) {
 		System.out.println("entering divide test state");
 		TestStateContext testStateContext = (TestStateContext) stateContext;
 		testStateContext.divideData(2);
@@ -38,7 +38,7 @@ public class DivideTestState extends AbstractState {
 	}
 
 	@Override
-	public void onExit(StateChangedEvent event) {
+	public void onExit(StateChangeEvent event) {
 		System.out.println("exiting divide test state");
 		System.out.println("");
 	}

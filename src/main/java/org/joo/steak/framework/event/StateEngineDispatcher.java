@@ -55,12 +55,12 @@ public interface StateEngineDispatcher {
 
 	/**
 	 * Dispatch a <code>StateChangedEvent</code> to all listeners when the state
-	 * changed
+	 * about to be changed
 	 * 
 	 * @param event
 	 *            the event
 	 */
-	public void dispatchStateChangedEvent(StateChangedEvent event);
+	public void dispatchStateChangeEvent(StateChangeEvent event);
 
 	/**
 	 * Dispatch a <code>StateChangedEvent</code> to all listeners when the state
@@ -69,5 +69,5 @@ public interface StateEngineDispatcher {
 	 * @param event
 	 *            the event
 	 */
-	public void dispatchStateEngineFinishEvent(StateChangedEvent event);
+	public void dispatchStateEngineFinishEvent(StateChangeEvent event);
 }
