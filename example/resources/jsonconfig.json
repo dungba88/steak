@@ -1,0 +1,19 @@
+{
+	"states": [{
+		"name": "print",
+		"value": "org.joo.steak.example.jsonconfig.states.PrintState"
+	}, {
+		"name": "concat",
+		"value": "org.joo.steak.example.jsonconfig.states.ConcatState"
+	}],
+	"flows": [{
+		"from": "print",
+		"action": "*",
+		"transitions": ["concat"]
+	},
+	{
+		"from": "concat",
+		"action": "ok",
+		"transitions": ["print"]
+	}]
+}

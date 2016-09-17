@@ -28,7 +28,6 @@ import org.joo.steak.impl.DefaultStateManager;
 import org.joo.steak.impl.config.DefaultStateEngineConfiguration;
 import org.joo.steak.impl.config.JSONStateEngineConfigurator;
 import org.joo.steak.impl.config.XMLStateEngineConfigurator;
-import org.joo.steak.impl.loader.ImmediateStateEngineLoader;
 import org.joo.steak.impl.loader.PrototypeStateEngineLoader;
 import org.joo.steak.test.states.AddTestState;
 import org.joo.steak.test.states.DefaultTestState;
@@ -59,7 +58,7 @@ public class StandaloneStateTest {
 		System.out.println("testing with XML configuration and immediate state loading");
 
 		StateManager manager = new DefaultStateManager();
-		manager.initialize(stateContext, configuration, new ImmediateStateEngineLoader());
+		manager.initialize(stateContext, configuration, null);
 		manager.run();
 
 		Assert.assertEquals(1, stateContext.getData());
@@ -77,7 +76,7 @@ public class StandaloneStateTest {
 		System.out.println("testing with JSON configuration and immediate state loading");
 
 		StateManager manager = new DefaultStateManager();
-		manager.initialize(stateContext, configuration, new ImmediateStateEngineLoader());
+		manager.initialize(stateContext, configuration, null);
 		manager.run();
 
 		Assert.assertEquals(1, stateContext.getData());
@@ -95,7 +94,7 @@ public class StandaloneStateTest {
 		System.out.println("testing with immediate state loading");
 
 		StateManager manager = new DefaultStateManager();
-		manager.initialize(stateContext, configuration, new ImmediateStateEngineLoader());
+		manager.initialize(stateContext, configuration, null);
 		manager.run();
 
 		Assert.assertEquals(1, stateContext.getData());
