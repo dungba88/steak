@@ -1,7 +1,7 @@
 package org.joo.steak.example.jsonconfig.states;
 
 import org.joo.steak.framework.StateContext;
-import org.joo.steak.framework.event.StateChangedEvent;
+import org.joo.steak.framework.event.StateChangeEvent;
 import org.joo.steak.impl.AbstractState;
 
 public class ConcatState extends AbstractState {
@@ -17,7 +17,7 @@ public class ConcatState extends AbstractState {
 	}
 
 	@Override
-	public void onEntry(StateContext stateContext, StateChangedEvent event) {
+	public void onEntry(StateContext stateContext, StateChangeEvent event) {
 		Object data = stateContext.getContextMap().get("data");
 		double d = 0;
 		if (data != null) {
@@ -35,7 +35,7 @@ public class ConcatState extends AbstractState {
 	}
 
 	@Override
-	public void onExit(StateChangedEvent event) {
+	public void onExit(StateChangeEvent event) {
 
 	}
 }
