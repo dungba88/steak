@@ -19,6 +19,8 @@
 package org.joo.steak.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -175,6 +177,27 @@ public abstract class AbstractStateManager extends AbstractStateEngineDispatcher
 			dispatchStateEngineFinishEvent(event);
 		}
 	}
+	
+	protected final void checkStateIntegrity(StateChangeEvent event) {
+		State currentState = getState(getCurrentState());
+		State state = (State) event.getSource();
+		if (state != currentState)
+			throw new IllegalArgumentException("StateChangedEvent was raised with invalid state");
+	}
+	
+	protected final String findNextState(String action, Object args) {
+		return findNextState(getCurrentState(), action, args);
+	}
+	
+	protected final String findNextState(String state, String action, Object args) {
+		StateTransition[] transitions = getTransitionsForState(state, action);
+		for (StateTransition transition : transitions) {
+			if (transition.isSatisfiedBy(args)) {
+				return transition.getNextState();
+			}
+		}
+		return null;
+	}
 
 	@Override
 	public StateContext getStateContext() {
@@ -183,12 +206,17 @@ public abstract class AbstractStateManager extends AbstractStateEngineDispatcher
 
 	@Override
 	public Map<String, State> getStates() {
-		return statesMap;
+		return Collections.unmodifiableMap(statesMap);
 	}
 
 	@Override
 	public Map<String, Map<String, StateTransition[]>> getStateTransitions() {
-		return transitionsMap;
+		Map<String, Map<String, StateTransition[]>> clone = new HashMap<String, Map<String,StateTransition[]>>();
+		for (String key : transitionsMap.keySet()) {
+			Map<String, StateTransition[]> transitions = transitionsMap.get(key);
+			clone.put(key, Collections.unmodifiableMap(transitions));
+		}
+		return Collections.unmodifiableMap(clone);
 	}
 
 	@Override

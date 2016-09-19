@@ -37,20 +37,10 @@ public class DefaultStateManager extends AbstractStateManager {
 	public void onStateChange(StateChangeEvent event) {
 		if (event == null)
 			return;
+		
+		checkStateIntegrity(event);
 
-		State currentState = getState(getCurrentState());
-		State state = (State) event.getSource();
-		if (state != currentState)
-			throw new IllegalArgumentException("StateChangedEvent was raised with invalid state");
-
-		StateTransition[] transitions = getTransitionsForState(getCurrentState(), event.getAction());
-		String nextStateId = null;
-		for (StateTransition transition : transitions) {
-			if (transition.isSatisfiedBy(event.getArgs())) {
-				nextStateId = transition.getNextState();
-				break;
-			}
-		}
+		String nextStateId = findNextState(event.getAction(), event.getArgs());
 
 		super.changeNextState(nextStateId, event);
 	}
