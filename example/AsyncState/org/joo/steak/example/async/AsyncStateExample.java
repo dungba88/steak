@@ -28,10 +28,10 @@ import org.joo.steak.framework.StateContext;
 import org.joo.steak.framework.StateManager;
 import org.joo.steak.framework.config.StateEngineConfiguration;
 import org.joo.steak.framework.event.StateChangeEvent;
-import org.joo.steak.framework.event.StateEngineListener;
 import org.joo.steak.impl.DefaultStateContext;
 import org.joo.steak.impl.DefaultStateManager;
 import org.joo.steak.impl.config.DefaultStateEngineConfiguration;
+import org.joo.steak.impl.event.DefaultStateEngineListener;
 
 /**
  * This an example of asynchronous state. It will call a request to
@@ -64,12 +64,7 @@ public class AsyncStateExample {
 		stateManager.initialize(context, configuration, null);
 
 		// hook some state engine events
-		stateManager.addStateEngineListener(new StateEngineListener() {
-
-			@Override
-			public void onStateChange(StateChangeEvent event) {
-
-			}
+		stateManager.addStateEngineListener(new DefaultStateEngineListener() {
 
 			@Override
 			public void onStart(StateContext stateContext) {

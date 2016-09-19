@@ -20,14 +20,20 @@ package org.joo.steak.test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.joo.steak.framework.StateManager;
 import org.joo.steak.framework.config.StateEngineConfiguration;
+import org.joo.steak.framework.event.StateChangeEvent;
+import org.joo.steak.impl.AsyncStateManager;
 import org.joo.steak.impl.DefaultStateManager;
 import org.joo.steak.impl.config.DefaultStateEngineConfiguration;
 import org.joo.steak.impl.config.JSONStateEngineConfigurator;
 import org.joo.steak.impl.config.XMLStateEngineConfigurator;
+import org.joo.steak.impl.event.DefaultStateEngineListener;
 import org.joo.steak.impl.loader.PrototypeStateEngineLoader;
 import org.joo.steak.test.states.AddTestState;
 import org.joo.steak.test.states.DefaultTestState;
@@ -46,22 +52,65 @@ import org.junit.Test;
  */
 public class StandaloneStateTest {
 
+	@Test
+	public void testAsync() {
+		System.out.println("testing with asynchronous state manager");
+
+		TestStateContext stateContext = new TestStateContext("default", 0);
+
+		StateEngineConfiguration configuration = setupSimpleConfiguration();
+
+		// create new fixed thread pool with 8 threads
+		ExecutorService service = Executors.newFixedThreadPool(8);
+
+		StateManager manager = new AsyncStateManager(service);
+		manager.initialize(stateContext, configuration, null);
+
+		// listen for finish event
+		manager.addStateEngineListener(new DefaultStateEngineListener() {
+
+			@Override
+			public void onFinish(StateChangeEvent event) {
+				System.out.println("state engine finished. shutting down executor service");
+				service.shutdown();
+			}
+		});
+
+		manager.run();
+
+		System.out.println("after running. awaiting ExecutorService shutdown");
+
+		try {
+			// we don't use CountDownLatch here for sake of simplicity, just 
+			// wait for 2 seconds or until executor service is shut down
+			service.awaitTermination(2, TimeUnit.SECONDS);
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+
+		Assert.assertEquals(1, stateContext.getData());
+
+		System.out.println("\n----------\n");
+	}
+
 	/**
 	 * Test with XML configuration
 	 */
 	@Test
 	public void testXML() {
+		System.out.println("testing with XML configuration and immediate state loading");
+
 		TestStateContext stateContext = new TestStateContext("default", 0);
 
 		StateEngineConfiguration configuration = setupXMLConfiguration();
-
-		System.out.println("testing with XML configuration and immediate state loading");
 
 		StateManager manager = new DefaultStateManager();
 		manager.initialize(stateContext, configuration, null);
 		manager.run();
 
 		Assert.assertEquals(1, stateContext.getData());
+
+		System.out.println("\n----------\n");
 	}
 
 	/**
@@ -69,17 +118,19 @@ public class StandaloneStateTest {
 	 */
 	@Test
 	public void testJSON() {
+		System.out.println("testing with JSON configuration and immediate state loading");
+
 		TestStateContext stateContext = new TestStateContext("default", 0);
 
 		StateEngineConfiguration configuration = setupJSONConfiguration();
-
-		System.out.println("testing with JSON configuration and immediate state loading");
 
 		StateManager manager = new DefaultStateManager();
 		manager.initialize(stateContext, configuration, null);
 		manager.run();
 
 		Assert.assertEquals(1, stateContext.getData());
+
+		System.out.println("\n----------\n");
 	}
 
 	/**
@@ -87,17 +138,19 @@ public class StandaloneStateTest {
 	 */
 	@Test
 	public void testImmediate() {
+		System.out.println("testing with immediate state loading");
+
 		TestStateContext stateContext = new TestStateContext("default", 0);
 
 		StateEngineConfiguration configuration = setupPrototypeConfiguration();
-
-		System.out.println("testing with immediate state loading");
 
 		StateManager manager = new DefaultStateManager();
 		manager.initialize(stateContext, configuration, null);
 		manager.run();
 
 		Assert.assertEquals(1, stateContext.getData());
+
+		System.out.println("\n----------\n");
 	}
 
 	/**
@@ -105,17 +158,19 @@ public class StandaloneStateTest {
 	 */
 	@Test
 	public void testPrototype() {
+		System.out.println("testing with prototype state loading");
+
 		TestStateContext stateContext = new TestStateContext("default", 0);
 
 		StateEngineConfiguration configuration = setupPrototypeConfiguration();
-
-		System.out.println("testing with prototype state loading");
 
 		StateManager manager = new DefaultStateManager();
 		manager.initialize(stateContext, configuration, new PrototypeStateEngineLoader());
 		manager.run();
 
 		Assert.assertEquals(1, stateContext.getData());
+
+		System.out.println("\n----------\n");
 	}
 
 	/**
@@ -123,9 +178,9 @@ public class StandaloneStateTest {
 	 */
 	@Test
 	public void testSimple() {
-		TestStateContext stateContext = new TestStateContext("default", 0);
-
 		System.out.println("testing with simple state");
+
+		TestStateContext stateContext = new TestStateContext("default", 0);
 
 		StateEngineConfiguration configuration = setupSimpleConfiguration();
 
@@ -134,6 +189,8 @@ public class StandaloneStateTest {
 		manager.run();
 
 		Assert.assertEquals(1, stateContext.getData());
+
+		System.out.println("\n----------\n");
 	}
 
 	private StateEngineConfiguration setupPrototypeConfiguration() {
