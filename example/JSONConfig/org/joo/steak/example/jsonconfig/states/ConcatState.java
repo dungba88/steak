@@ -1,6 +1,7 @@
 package org.joo.steak.example.jsonconfig.states;
 
-import org.joo.steak.framework.StateContext;
+import java.util.Map;
+
 import org.joo.steak.framework.event.StateChangeEvent;
 import org.joo.steak.impl.AbstractState;
 
@@ -17,15 +18,16 @@ public class ConcatState extends AbstractState {
 	}
 
 	@Override
-	public void onEntry(StateContext stateContext, StateChangeEvent event) {
-		Object data = stateContext.getContextMap().get("data");
+	public void onEntry(StateChangeEvent event) {
+		Map<String, Object> stateContextMap = getStateContext().getContextMap();
+		Object data = stateContextMap.get("data");
 		double d = 0;
 		if (data != null) {
 			d = (double) data;
 		}
 		d += Math.random();
 		
-		stateContext.getContextMap().put("data", d);
+		stateContextMap.put("data", d);
 		
 		if (d <= max) {
 			changeState("ok");
