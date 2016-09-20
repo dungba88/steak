@@ -20,6 +20,7 @@ package org.joo.steak.impl.states;
 
 import org.joo.steak.framework.State;
 import org.joo.steak.framework.event.StateChangeEvent;
+import org.joo.steak.framework.exception.StateExecutionException;
 import org.joo.steak.impl.AbstractStateProxy;
 
 public class StatePrototypeProxy extends AbstractStateProxy {
@@ -29,13 +30,13 @@ public class StatePrototypeProxy extends AbstractStateProxy {
 	}
 
 	@Override
-	public void onEntry(StateChangeEvent event) {
+	public void onEntry(StateChangeEvent event) throws StateExecutionException {
 		State loadedState = loadState();
 		loadedState.onEntry(event);
 	}
 
 	@Override
-	public void onExit(StateChangeEvent event) {
+	public void onExit(StateChangeEvent event) throws StateExecutionException {
 		State loadedState = loadState();
 		loadedState.onExit(event);
 	}

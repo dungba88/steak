@@ -23,6 +23,7 @@ import java.util.Map;
 import org.joo.steak.framework.config.StateEngineConfiguration;
 import org.joo.steak.framework.event.StateChangedListener;
 import org.joo.steak.framework.event.StateEngineDispatcher;
+import org.joo.steak.framework.exception.StateExceptionHandler;
 import org.joo.steak.framework.loader.StateEngineLoader;
 
 /**
@@ -102,4 +103,18 @@ public interface StateManager extends StateChangedListener, StateEngineDispatche
 	 * @return the transitions map
 	 */
 	public Map<String, Map<String, StateTransition[]>> getStateTransitions();
+	
+	/**
+	 * Register new exception handler
+	 * 
+	 * @param handler
+	 */
+	public void registerExceptionHandler(StateExceptionHandler handler);
+	
+	/**
+	 * Unregister exception handler
+	 * 
+	 * @param handler
+	 */
+	public void unregisterExceptionHandler(StateExceptionHandler handler);
 }

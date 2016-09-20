@@ -30,6 +30,8 @@ import org.joo.steak.framework.StateManager;
 import org.joo.steak.framework.StateTransition;
 import org.joo.steak.framework.config.StateEngineConfiguration;
 import org.joo.steak.framework.event.StateChangeEvent;
+import org.joo.steak.framework.exception.StateExceptionHandler;
+import org.joo.steak.framework.exception.StateExecutionException;
 import org.joo.steak.framework.loader.StateEngineLoader;
 import org.joo.steak.impl.event.AbstractStateEngineDispatcher;
 import org.joo.steak.impl.loader.DefaultStateEngineLoader;
@@ -37,6 +39,8 @@ import org.joo.steak.impl.loader.DefaultStateEngineLoader;
 public abstract class AbstractStateManager extends AbstractStateEngineDispatcher implements StateManager {
 
 	private static final Object GLOBAL_ACTION = "*";
+	
+	private List<StateExceptionHandler> exceptionHandlers;
 
 	private Map<String, State> statesMap;
 
@@ -59,6 +63,8 @@ public abstract class AbstractStateManager extends AbstractStateEngineDispatcher
 			throw new NullPointerException("stateContext or configuration is null");
 
 		if (!this.initialized) {
+			this.exceptionHandlers = new ArrayList<>();
+			
 			if (loader == null)
 				loader = new DefaultStateEngineLoader();
 
@@ -163,12 +169,39 @@ public abstract class AbstractStateManager extends AbstractStateEngineDispatcher
 		}
 		return new StateTransition[0];
 	}
-
+	
+	@Override
+	public void registerExceptionHandler(StateExceptionHandler handler) {
+		this.exceptionHandlers.add(handler);
+	}
+	
+	@Override
+	public void unregisterExceptionHandler(StateExceptionHandler handler) {
+		int idx = getIndex(this.exceptionHandlers, handler);
+		if (idx != -1)
+			this.exceptionHandlers.remove(idx);
+	}
+	
+	protected void delegateException(StateExecutionException exception) {
+		boolean success = false;
+		
+		for (StateExceptionHandler handler : this.exceptionHandlers) {
+			success = handler.handleException(exception) | success;
+		}
+		
+		if (!success)	// exception not handled successfully
+			throw new RuntimeException(exception);
+	}
+	
 	protected void changeNextState(String nextStateId, StateChangeEvent event) {
 		if (currentState != null) {
 			State currentStateObj = getState(currentState);
 			if (currentStateObj != null) {
-				currentStateObj.onExit(event);
+				try {
+					currentStateObj.onExit(event);
+				} catch (StateExecutionException e) {
+					delegateException(e);
+				}
 			}
 		}
 
@@ -178,7 +211,11 @@ public abstract class AbstractStateManager extends AbstractStateEngineDispatcher
 		if (nextState != null) {
 			currentState = nextStateId;
 			
-			nextState.onEntry(event);
+			try {
+				nextState.onEntry(event);
+			} catch (StateExecutionException e) {
+				delegateException(e);
+			}
 			
 			dispatchAfterStateChangeEvent(event);
 		} else {

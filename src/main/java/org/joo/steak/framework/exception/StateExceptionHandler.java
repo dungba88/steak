@@ -16,34 +16,21 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.joo.steak.impl.states;
+package org.joo.steak.framework.exception;
 
-import org.joo.steak.framework.State;
-import org.joo.steak.framework.event.StateChangeEvent;
-import org.joo.steak.framework.exception.StateExecutionException;
-import org.joo.steak.impl.AbstractStateProxy;
-
-public class StateLazyLoadProxy extends AbstractStateProxy {
-
-	private State loadedState;
-
-	public StateLazyLoadProxy(String stateClassName) {
-		super(stateClassName);
-	}
-
-	@Override
-	public void onEntry(StateChangeEvent event) throws StateExecutionException {
-		if (loadedState == null) {
-			loadedState = loadState();
-		}
-		loadedState.onEntry(event);
-	}
-
-	@Override
-	public void onExit(StateChangeEvent event) throws StateExecutionException {
-		if (loadedState == null) {
-			loadedState = loadState();
-		}
-		loadedState.onExit(event);
-	}
+/**
+ * Single interface for handling <code>StateExecutionException</code>.
+ * 
+ * @author griever
+ *
+ */
+public interface StateExceptionHandler {
+	
+	/**
+	 * Handle the exception.
+	 * 
+	 * @param exception
+	 * @return true if the exception handling is successfully
+	 */
+	public boolean handleException(StateExecutionException exception);
 }

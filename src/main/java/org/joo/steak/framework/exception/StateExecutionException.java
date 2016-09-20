@@ -16,34 +16,25 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.joo.steak.impl.states;
+package org.joo.steak.framework.exception;
 
-import org.joo.steak.framework.State;
-import org.joo.steak.framework.event.StateChangeEvent;
-import org.joo.steak.framework.exception.StateExecutionException;
-import org.joo.steak.impl.AbstractStateProxy;
+/**
+ * This exception is thrown in initialization method of
+ * <code>StateManager</code> or some other classes. It indicates that something
+ * wrong when loading configuration.
+ * 
+ * @author griever
+ *
+ */
+public class StateExecutionException extends Exception {
+	
+	private static final long serialVersionUID = 2801421862681643168L;
 
-public class StateLazyLoadProxy extends AbstractStateProxy {
-
-	private State loadedState;
-
-	public StateLazyLoadProxy(String stateClassName) {
-		super(stateClassName);
+	public StateExecutionException(String msg) {
+		super(msg);
 	}
 
-	@Override
-	public void onEntry(StateChangeEvent event) throws StateExecutionException {
-		if (loadedState == null) {
-			loadedState = loadState();
-		}
-		loadedState.onEntry(event);
-	}
-
-	@Override
-	public void onExit(StateChangeEvent event) throws StateExecutionException {
-		if (loadedState == null) {
-			loadedState = loadState();
-		}
-		loadedState.onExit(event);
+	public StateExecutionException(String msg, Throwable cause) {
+		super(msg, cause);
 	}
 }

@@ -28,7 +28,7 @@ import org.joo.steak.framework.event.StateEngineListener;
 
 public abstract class AbstractStateEngineDispatcher implements StateEngineDispatcher {
 
-	public List<StateEngineListener> listeners;
+	private List<StateEngineListener> listeners;
 
 	public AbstractStateEngineDispatcher() {
 		listeners = new ArrayList<>();
@@ -41,7 +41,7 @@ public abstract class AbstractStateEngineDispatcher implements StateEngineDispat
 
 	@Override
 	public void removeStateEngineListener(StateEngineListener listener) {
-		int idx = getIndex(listener);
+		int idx = getIndex(listeners, listener);
 		if (idx != -1)
 			listeners.remove(idx);
 	}
@@ -82,10 +82,10 @@ public abstract class AbstractStateEngineDispatcher implements StateEngineDispat
 		}
 	}
 
-	protected final int getIndex(StateEngineListener theListener) {
+	protected final int getIndex(List<? extends Object> list, Object objectToFind) {
 		int idx = 0;
-		for (StateEngineListener listener : listeners) {
-			if (listener != null && listener.equals(theListener)) {
+		for (Object object : list) {
+			if (object != null && object.equals(objectToFind)) {
 				return idx;
 			}
 			idx++;
