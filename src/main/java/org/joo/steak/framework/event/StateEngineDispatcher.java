@@ -60,7 +60,16 @@ public interface StateEngineDispatcher {
 	 * @param event
 	 *            the event
 	 */
-	public void dispatchStateChangeEvent(StateChangeEvent event);
+	public void dispatchBeforeStateChangeEvent(StateChangeEvent event);
+	
+	/**
+	 * Dispatch a <code>StateChangedEvent</code> to all listeners when the state
+	 * changed
+	 * 
+	 * @param event
+	 *            the event
+	 */
+	public void dispatchAfterStateChangeEvent(StateChangeEvent event);
 
 	/**
 	 * Dispatch a <code>StateChangedEvent</code> to all listeners when the state

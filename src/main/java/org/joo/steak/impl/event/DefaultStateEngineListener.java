@@ -25,7 +25,12 @@ import org.joo.steak.framework.event.StateEngineListener;
 public class DefaultStateEngineListener implements StateEngineListener {
 
 	@Override
-	public void onStateChange(StateChangeEvent event) {
+	public void onBeforeStateChange(StateChangeEvent event) {
+
+	}
+
+	@Override
+	public void onAfterStateChange(StateChangeEvent event) {
 
 	}
 

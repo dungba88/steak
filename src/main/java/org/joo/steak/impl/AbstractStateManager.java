@@ -166,7 +166,7 @@ public abstract class AbstractStateManager extends AbstractStateEngineDispatcher
 			}
 		}
 
-		dispatchStateChangeEvent(event);
+		dispatchBeforeStateChangeEvent(event);
 
 		State nextState = getState(nextStateId);
 		if (nextState != null) {

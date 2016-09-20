@@ -33,7 +33,7 @@ import org.joo.steak.framework.event.StateChangeEvent;
  *
  */
 public interface State extends StateChangedDispatcher {
-
+	
 	/**
 	 * Called by <code>StateManager</code> when reaching the current state
 	 * 

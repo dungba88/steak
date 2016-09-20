@@ -56,10 +56,18 @@ public abstract class AbstractStateEngineDispatcher implements StateEngineDispat
 	}
 
 	@Override
-	public void dispatchStateChangeEvent(StateChangeEvent event) {
+	public void dispatchBeforeStateChangeEvent(StateChangeEvent event) {
 		for (StateEngineListener listener : listeners) {
 			if (listener != null) {
-				listener.onStateChange(event);
+				listener.onBeforeStateChange(event);
+			}
+		}
+	}
+	
+	public void dispatchAfterStateChangeEvent(StateChangeEvent event) {
+		for (StateEngineListener listener : listeners) {
+			if (listener != null) {
+				listener.onAfterStateChange(event);
 			}
 		}
 	}
