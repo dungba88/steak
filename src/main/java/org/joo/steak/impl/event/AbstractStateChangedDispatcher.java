@@ -57,11 +57,16 @@ public abstract class AbstractStateChangedDispatcher implements StateChangedDisp
 	protected final int getIndex(StateChangedListener theListener) {
 		int idx = 0;
 		for (StateChangedListener listener : listeners) {
-			if (listener != null && listener.equals(theListener)) {
+			if (compare(listener, theListener)) {
 				return idx;
 			}
 			idx++;
 		}
 		return -1;
+	}
+
+	private boolean compare(StateChangedListener listener,
+			StateChangedListener theListener) {
+		return listener != null && listener.equals(theListener);
 	}
 }
