@@ -171,7 +171,10 @@ public abstract class AbstractStateManager extends AbstractStateEngineDispatcher
 		State nextState = getState(nextStateId);
 		if (nextState != null) {
 			currentState = nextStateId;
+			
 			nextState.onEntry(stateContext, event);
+			
+			dispatchAfterStateChangeEvent(event);
 		} else {
 			// no state found, exit the engine
 			dispatchStateEngineFinishEvent(event);
