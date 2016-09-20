@@ -41,7 +41,7 @@ And for the state itself, here is a simple implementation of a state
     public class DefaultTestState extends AbstractState {
 	
         @Override
-        public void onEntry(StateContext stateContext, StateChangedEvent event) {
+        public void onEntry(StateChangedEvent event) {
             System.out.println("entering default test state");
             changeState("done", null);
         }
