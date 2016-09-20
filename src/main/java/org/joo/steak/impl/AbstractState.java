@@ -25,7 +25,7 @@ import org.joo.steak.impl.event.AbstractStateChangedDispatcher;
 /**
  * An abstract implementation of <code>State</code>. It includes the
  * <code>changeState</code> method as a more convenient way than the usual
- * <code>fireStateChangedEvent</code>.
+ * <code>dispatchStateChangedEvent</code>.
  * 
  * @author griever
  *
@@ -39,7 +39,7 @@ public abstract class AbstractState extends AbstractStateChangedDispatcher imple
 	 *            the action that triggers the state change.
 	 */
 	protected void changeState(String action) {
-		dispatchStateChangedEvent(new StateChangeEvent(this, action, null));
+		changeState(action, null);
 	}
 
 	/**
