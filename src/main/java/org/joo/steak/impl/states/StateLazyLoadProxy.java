@@ -19,7 +19,6 @@
 package org.joo.steak.impl.states;
 
 import org.joo.steak.framework.State;
-import org.joo.steak.framework.StateContext;
 import org.joo.steak.framework.event.StateChangeEvent;
 import org.joo.steak.impl.AbstractStateProxy;
 
@@ -32,11 +31,11 @@ public class StateLazyLoadProxy extends AbstractStateProxy {
 	}
 
 	@Override
-	public void onEntry(StateContext stateContext, StateChangeEvent event) {
+	public void onEntry(StateChangeEvent event) {
 		if (loadedState == null) {
 			loadedState = loadState();
 		}
-		loadedState.onEntry(stateContext, event);
+		loadedState.onEntry(event);
 	}
 
 	@Override

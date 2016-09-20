@@ -35,14 +35,20 @@ import org.joo.steak.framework.event.StateChangeEvent;
 public interface State extends StateChangedDispatcher {
 	
 	/**
-	 * Called by <code>StateManager</code> when reaching the current state
+	 * Initialize with <code>StateContext</code>
 	 * 
 	 * @param stateContext
-	 *            the state context which may contains data to be processed
+	 * 			the state context
+	 */
+	public void initialize(StateContext stateContext);
+	
+	/**
+	 * Called by <code>StateManager</code> when reaching the current state
+	 * 
 	 * @param event
 	 *            the event dispatched by last state when it finishes
 	 */
-	public void onEntry(StateContext stateContext, StateChangeEvent event);
+	public void onEntry(StateChangeEvent event);
 
 	/**
 	 * Called by <code>StateManager</code> when exiting the current state

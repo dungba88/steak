@@ -20,10 +20,9 @@ package org.joo.steak.impl;
 
 import org.joo.steak.framework.State;
 import org.joo.steak.framework.exception.StateInitializationException;
-import org.joo.steak.impl.event.AbstractStateChangedDispatcher;
 import org.joo.steak.impl.event.StateChangedListenerDispatcherProxy;
 
-public abstract class AbstractStateProxy extends AbstractStateChangedDispatcher implements State {
+public abstract class AbstractStateProxy extends AbstractState {
 
 	private String stateClassName;
 
@@ -35,6 +34,7 @@ public abstract class AbstractStateProxy extends AbstractStateChangedDispatcher 
 		try {
 			State loadedState = (State) ReflectionUtils.loadClass(stateClassName);
 			loadedState.addStateChangedListener(new StateChangedListenerDispatcherProxy(this));
+			loadedState.initialize(getStateContext());
 			return loadedState;
 		} catch (ClassCastException e) {
 			throw new StateInitializationException("Class " + stateClassName + " is not subclass of State");

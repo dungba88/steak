@@ -23,7 +23,6 @@ import java.io.InputStream;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
-import org.joo.steak.framework.StateContext;
 import org.joo.steak.framework.event.StateChangeEvent;
 import org.joo.steak.impl.AbstractState;
 
@@ -36,7 +35,7 @@ import org.joo.steak.impl.AbstractState;
 public class SuccessState extends AbstractState {
 
 	@Override
-	public void onEntry(StateContext stateContext, StateChangeEvent event) {
+	public void onEntry(StateChangeEvent event) {
 		if (event.getArgs() instanceof HttpResponse) {
 			HttpResponse response = (HttpResponse) event.getArgs();
 			try {

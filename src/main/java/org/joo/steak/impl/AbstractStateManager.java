@@ -62,10 +62,10 @@ public abstract class AbstractStateManager extends AbstractStateEngineDispatcher
 			if (loader == null)
 				loader = new DefaultStateEngineLoader();
 
-			this.statesMap = initializeStatesConfig(loader, configuration.getStatesConfig());
-			this.transitionsMap = initializeTransitionsConfig(loader, configuration.getTransitionsConfig());
-			this.initialState = stateContext.getInitialState();
 			this.stateContext = stateContext;
+			this.initialState = stateContext.getInitialState();
+			this.statesMap = initializeStatesConfig(stateContext, loader, configuration.getStatesConfig());
+			this.transitionsMap = initializeTransitionsConfig(loader, configuration.getTransitionsConfig());
 
 			doInitialization(configuration);
 
@@ -113,17 +113,23 @@ public abstract class AbstractStateManager extends AbstractStateEngineDispatcher
 		return transitions.toArray(new StateTransition[0]);
 	}
 
-	private Map<String, State> initializeStatesConfig(StateEngineLoader loader, Map<String, Object> statesConfig) {
+	private Map<String, State> initializeStatesConfig(StateContext stateContext, 
+			StateEngineLoader loader, Map<String, Object> statesConfig) {
 
 		Map<String, State> statesMap = doInitializeStatesMap();
 		if (statesConfig != null) {
 			for (String key : statesConfig.keySet()) {
 				State state = loader.loadState(statesConfig.get(key));
-				state.addStateChangedListener(this);
+				initializeState(state);
 				statesMap.put(key, state);
 			}
 		}
 		return statesMap;
+	}
+
+	private void initializeState(State state) {
+		state.addStateChangedListener(this);
+		state.initialize(stateContext);
 	}
 
 	protected abstract Map<String, State> doInitializeStatesMap();
@@ -172,7 +178,7 @@ public abstract class AbstractStateManager extends AbstractStateEngineDispatcher
 		if (nextState != null) {
 			currentState = nextStateId;
 			
-			nextState.onEntry(stateContext, event);
+			nextState.onEntry(event);
 			
 			dispatchAfterStateChangeEvent(event);
 		} else {

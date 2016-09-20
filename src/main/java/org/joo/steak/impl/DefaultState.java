@@ -18,7 +18,6 @@
  */
 package org.joo.steak.impl;
 
-import org.joo.steak.framework.StateContext;
 import org.joo.steak.framework.event.StateChangeEvent;
 
 
@@ -31,7 +30,7 @@ import org.joo.steak.framework.event.StateChangeEvent;
 public class DefaultState extends AbstractState {
 
 	@Override
-	public void onEntry(StateContext stateContext, StateChangeEvent event) {
+	public void onEntry(StateChangeEvent event) {
 		
 	}
 

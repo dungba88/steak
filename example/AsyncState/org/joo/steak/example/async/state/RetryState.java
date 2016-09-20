@@ -18,7 +18,6 @@
  */
 package org.joo.steak.example.async.state;
 
-import org.joo.steak.framework.StateContext;
 import org.joo.steak.framework.event.StateChangeEvent;
 import org.joo.steak.impl.AbstractState;
 
@@ -38,7 +37,7 @@ public class RetryState extends AbstractState {
 	}
 
 	@Override
-	public void onEntry(StateContext stateContext, StateChangeEvent event) {
+	public void onEntry(StateChangeEvent event) {
 		System.out.println("retrying request. counter = " + counter);
 		if (counter-- > 0)
 			changeState("ok");

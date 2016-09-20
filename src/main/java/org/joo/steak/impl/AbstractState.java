@@ -19,6 +19,7 @@
 package org.joo.steak.impl;
 
 import org.joo.steak.framework.State;
+import org.joo.steak.framework.StateContext;
 import org.joo.steak.framework.event.StateChangeEvent;
 import org.joo.steak.impl.event.AbstractStateChangedDispatcher;
 
@@ -31,6 +32,14 @@ import org.joo.steak.impl.event.AbstractStateChangedDispatcher;
  *
  */
 public abstract class AbstractState extends AbstractStateChangedDispatcher implements State {
+	
+	private StateContext stateContext;
+	
+	@Override
+	public void initialize(StateContext stateContext) {
+		if (this.stateContext == null)
+			this.stateContext = stateContext;
+	}
 
 	/**
 	 * Notify <code>StateManager</code> to change the state.
@@ -52,5 +61,9 @@ public abstract class AbstractState extends AbstractStateChangedDispatcher imple
 	 */
 	protected void changeState(String action, Object args) {
 		dispatchStateChangedEvent(new StateChangeEvent(this, action, args));
+	}
+	
+	public StateContext getStateContext() {
+		return stateContext;
 	}
 }
