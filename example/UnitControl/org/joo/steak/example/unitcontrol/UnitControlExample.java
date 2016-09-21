@@ -8,11 +8,11 @@ import org.joo.steak.example.unitcontrol.common.Unit;
 import org.joo.steak.example.unitcontrol.common.UnitType;
 
 public class UnitControlExample {
-	
+
 	private static final int UNIT_SPAWNED = 10;
 
 	private Unit[] units;
-	
+
 	private Random rnd = ThreadLocalRandom.current();
 
 	public static void main(String[] args) {
@@ -58,9 +58,9 @@ public class UnitControlExample {
 
 	private void doTurn(int turn) {
 		System.out.println("Turn " + turn);
-		
+
 		filterDeadUnits();
-		
+
 		randomizeTargets();
 
 		System.out.println("----------");
@@ -115,7 +115,8 @@ public class UnitControlExample {
 
 		for (Unit targetUnit : clone) {
 			if (targetUnit != unit) {
-				System.out.println(unit.getUnitName() + " locks on " + targetUnit.getUnitName());
+				System.out.println(unit.getUnitName() + " locks on "
+						+ targetUnit.getUnitName());
 				unit.changeTarget(targetUnit);
 				break;
 			}
@@ -152,7 +153,8 @@ public class UnitControlExample {
 			double hp = 10 + Math.random() * 10;
 			double dmg = 2 + Math.random() * 3;
 			Unit unit = new Unit("Unit " + (i + 1), unitType, hp, dmg);
-			System.out.println("Creating " + unit.getUnitName() + ": " + unitType.toString() + ". DMG: " + normalize(dmg));
+			System.out.println("Creating " + unit.getUnitName() + ": "
+					+ unitType.toString() + ". DMG: " + normalize(dmg));
 			units[i] = unit;
 		}
 
