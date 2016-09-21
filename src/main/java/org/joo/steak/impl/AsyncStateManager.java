@@ -43,7 +43,7 @@ public class AsyncStateManager extends DefaultStateManager {
 
 			@Override
 			public void run() {
-				changeNextState(getInitialState(), null);
+				enterState(getInitialState(), null);
 			}
 		});
 	}
@@ -55,13 +55,11 @@ public class AsyncStateManager extends DefaultStateManager {
 
 		checkStateIntegrity(event);
 
-		String nextStateId = findNextState(event.getAction(), event.getArgs());
-
 		service.execute(new Runnable() {
 
 			@Override
 			public void run() {
-				changeNextState(nextStateId, event);
+				moveNextState(event);
 			}
 		});
 	}

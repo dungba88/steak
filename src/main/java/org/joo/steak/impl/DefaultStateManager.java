@@ -30,7 +30,7 @@ public class DefaultStateManager extends AbstractStateManager {
 
 	@Override
 	public void doRun() {
-		super.changeNextState(getInitialState(), null);
+		super.enterState(getInitialState(), null);
 	}
 
 	@Override
@@ -40,9 +40,7 @@ public class DefaultStateManager extends AbstractStateManager {
 		
 		checkStateIntegrity(event);
 
-		String nextStateId = findNextState(event.getAction(), event.getArgs());
-
-		super.changeNextState(nextStateId, event);
+		moveNextState(event);
 	}
 
 	@Override

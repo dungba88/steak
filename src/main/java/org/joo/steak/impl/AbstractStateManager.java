@@ -28,6 +28,7 @@ import org.joo.steak.framework.State;
 import org.joo.steak.framework.StateContext;
 import org.joo.steak.framework.StateManager;
 import org.joo.steak.framework.StateTransition;
+import org.joo.steak.framework.TransitionContext;
 import org.joo.steak.framework.config.StateEngineConfiguration;
 import org.joo.steak.framework.event.StateChangeEvent;
 import org.joo.steak.framework.exception.StateExceptionHandler;
@@ -38,7 +39,7 @@ import org.joo.steak.impl.loader.DefaultStateEngineLoader;
 
 public abstract class AbstractStateManager extends AbstractStateEngineDispatcher implements StateManager {
 
-	private static final Object GLOBAL_ACTION = "*";
+	private static final String GLOBAL_ACTION = "*";
 	
 	private List<StateExceptionHandler> exceptionHandlers;
 
@@ -98,16 +99,21 @@ public abstract class AbstractStateManager extends AbstractStateEngineDispatcher
 		if (transitionsConfig != null) {
 			for (String stateName : transitionsConfig.keySet()) {
 				Map<String, Object[]> transitionConfig = transitionsConfig.get(stateName);
-				Map<String, StateTransition[]> transitionsMap = doInitializeTransitionMap();
-				for (String action : transitionConfig.keySet()) {
-					Object[] transitionObjects = transitionConfig.get(action);
-					StateTransition[] transitions = loadTransitions(loader, transitionObjects);
-					transitionsMap.put(action, transitions);
-				}
+				Map<String, StateTransition[]> transitionsMap = initializeTransitionConfig(loader, transitionConfig);
 				map.put(stateName, transitionsMap);
 			}
 		}
 		return map;
+	}
+
+	private Map<String, StateTransition[]> initializeTransitionConfig(StateEngineLoader loader, Map<String, Object[]> transitionConfig) {
+		Map<String, StateTransition[]> transitionsMap = doInitializeTransitionMap();
+		for (String action : transitionConfig.keySet()) {
+			Object[] transitionObjects = transitionConfig.get(action);
+			StateTransition[] transitions = loadTransitions(loader, transitionObjects);
+			transitionsMap.put(action, transitions);
+		}
+		return transitionsMap;
 	}
 
 	private StateTransition[] loadTransitions(StateEngineLoader loader, Object[] transitionObjects) {
@@ -150,6 +156,9 @@ public abstract class AbstractStateManager extends AbstractStateEngineDispatcher
 
 	@Override
 	public State getState(String stateName) {
+		if (stateName == null)
+			return null;
+		
 		if (statesMap != null && statesMap.containsKey(stateName)) {
 			return statesMap.get(stateName);
 		}
@@ -158,18 +167,27 @@ public abstract class AbstractStateManager extends AbstractStateEngineDispatcher
 
 	@Override
 	public StateTransition[] getTransitionsForState(String stateName, String action) {
-		if (transitionsMap != null && transitionsMap.containsKey(stateName)) {
-			Map<String, StateTransition[]> transitions = transitionsMap.get(stateName);
-			if (transitions != null) {
-				if (transitions.containsKey(action))
-					return transitions.get(action);
-				if (transitions.containsKey(GLOBAL_ACTION))
-					return transitions.get(GLOBAL_ACTION);
-			}
+		if (transitionsMap != null) {
+			StateTransition[] transitions = findMatchedTransitions(stateName, action);
+			if (transitions == null)
+				transitions = findMatchedTransitions(GLOBAL_ACTION, action);
+			if (transitions != null)
+				return transitions;
 		}
 		return new StateTransition[0];
 	}
 	
+	private StateTransition[] findMatchedTransitions(String stateName, String action) {
+		if (transitionsMap.containsKey(stateName)) {
+			Map<String, StateTransition[]> map = transitionsMap.get(stateName);
+			if (map.containsKey(action))
+				return map.get(action);
+			if (map.containsKey(GLOBAL_ACTION))
+				return map.get(GLOBAL_ACTION);
+		}
+		return null;
+	}
+
 	@Override
 	public void registerExceptionHandler(StateExceptionHandler handler) {
 		this.exceptionHandlers.add(handler);
@@ -193,37 +211,6 @@ public abstract class AbstractStateManager extends AbstractStateEngineDispatcher
 			throw new RuntimeException(exception);
 	}
 	
-	protected void changeNextState(String nextStateId, StateChangeEvent event) {
-		if (currentState != null) {
-			State currentStateObj = getState(currentState);
-			if (currentStateObj != null) {
-				try {
-					currentStateObj.onExit(event);
-				} catch (StateExecutionException e) {
-					delegateException(e);
-				}
-			}
-		}
-
-		dispatchBeforeStateChangeEvent(event);
-
-		State nextState = getState(nextStateId);
-		if (nextState != null) {
-			currentState = nextStateId;
-			
-			try {
-				nextState.onEntry(event);
-			} catch (StateExecutionException e) {
-				delegateException(e);
-			}
-			
-			dispatchAfterStateChangeEvent(event);
-		} else {
-			// no state found, exit the engine
-			dispatchStateEngineFinishEvent(event);
-		}
-	}
-	
 	protected final void checkStateIntegrity(StateChangeEvent event) {
 		State currentState = getState(getCurrentState());
 		State state = (State) event.getSource();
@@ -231,18 +218,63 @@ public abstract class AbstractStateManager extends AbstractStateEngineDispatcher
 			throw new IllegalArgumentException("StateChangedEvent was raised with invalid state");
 	}
 	
-	protected final String findNextState(String action, Object args) {
-		return findNextState(getCurrentState(), action, args);
+	protected final void moveNextState(StateChangeEvent event) {
+		exitCurrentState(event);
+		
+		StateTransition transition = getTransitionForNextState(currentState, event.getAction(), event.getArgs());
+		
+		if (transition != null) {
+			String nextStateId = transition.getNextState();
+			enterState(nextStateId, event);
+		} else {
+			// no state found, exit the engine
+			currentState = null;
+			dispatchStateEngineFinishEvent(event);
+		}
 	}
 	
-	protected final String findNextState(String state, String action, Object args) {
+	protected final StateTransition getTransitionForNextState(String state, String action, Object args) {
+		TransitionContext transitionContext = new TransitionContext(stateContext, args);
+		
 		StateTransition[] transitions = getTransitionsForState(state, action);
 		for (StateTransition transition : transitions) {
-			if (transition.isSatisfiedBy(args)) {
-				return transition.getNextState();
+			if (transition.isSatisfiedBy(transitionContext)) {
+				return transition;
 			}
 		}
 		return null;
+	}
+
+	protected void exitCurrentState(StateChangeEvent event) {
+		State currentStateObj = getState(currentState);
+		if (currentStateObj != null) {
+			try {
+				currentStateObj.onExit(event);
+			} catch (StateExecutionException e) {
+				delegateException(e);
+			}
+		}
+	}
+
+	protected void enterState(String nextStateId, StateChangeEvent event) {
+		dispatchBeforeStateChangeEvent(event);
+		
+		State nextState = getState(nextStateId);
+			
+		if (nextState == null) {
+			delegateException(new StateExecutionException("State " + nextStateId + " not found"));
+			return;
+		}
+		
+		currentState = nextStateId;
+		
+		try {
+			nextState.onEntry(event);
+		} catch (StateExecutionException e) {
+			delegateException(e);
+		}
+		
+		dispatchAfterStateChangeEvent(event);
 	}
 
 	@Override

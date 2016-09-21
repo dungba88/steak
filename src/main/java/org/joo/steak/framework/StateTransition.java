@@ -30,11 +30,11 @@ public interface StateTransition {
 	/**
 	 * Check if this transition upon some object should be in effect
 	 * 
-	 * @param args
-	 *            the object to be checked
+	 * @param transitionContext
+	 *            the transition context
 	 * @return true if condition matched and we should use this transition
 	 */
-	public boolean isSatisfiedBy(Object args);
+	public boolean isSatisfiedBy(TransitionContext transitionContext);
 
 	/**
 	 * Get the next state from the starting state

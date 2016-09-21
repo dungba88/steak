@@ -18,6 +18,8 @@
  */
 package org.joo.steak.impl;
 
+import org.joo.steak.framework.TransitionContext;
+
 /**
  * A simple implementation of <code>StateTransition</code>. It always match the
  * transition condition.
@@ -32,7 +34,7 @@ public class SimpleStateTransition extends AbstractStateTransition {
 	}
 
 	@Override
-	public boolean isSatisfiedBy(Object args) {
+	public boolean isSatisfiedBy(TransitionContext transitionContext) {
 		return true;
 	}
 }

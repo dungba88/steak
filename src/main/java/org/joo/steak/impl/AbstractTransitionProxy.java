@@ -19,6 +19,7 @@
 package org.joo.steak.impl;
 
 import org.joo.steak.framework.StateTransition;
+import org.joo.steak.framework.TransitionContext;
 import org.joo.steak.framework.exception.StateInitializationException;
 
 public abstract class AbstractTransitionProxy implements StateTransition {
@@ -30,9 +31,9 @@ public abstract class AbstractTransitionProxy implements StateTransition {
 	}
 
 	@Override
-	public boolean isSatisfiedBy(Object args) {
+	public boolean isSatisfiedBy(TransitionContext transitionContext) {
 		StateTransition loadedTransition = getTransition();
-		return loadedTransition.isSatisfiedBy(args);
+		return loadedTransition.isSatisfiedBy(transitionContext);
 	}
 
 	@Override
