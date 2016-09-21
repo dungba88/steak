@@ -8,8 +8,12 @@ import org.joo.steak.example.unitcontrol.common.Unit;
 import org.joo.steak.example.unitcontrol.common.UnitType;
 
 public class UnitControlExample {
+	
+	private static final int UNIT_SPAWNED = 10;
 
 	private Unit[] units;
+	
+	private Random rnd = ThreadLocalRandom.current();
 
 	public static void main(String[] args) {
 
@@ -18,7 +22,7 @@ public class UnitControlExample {
 	}
 
 	public void run() {
-		spawnUnits(3);
+		spawnUnits(UNIT_SPAWNED);
 
 		for (int i = 1; i <= 100; i++) {
 			doTurn(i);
@@ -26,11 +30,15 @@ public class UnitControlExample {
 			if (checkWin())
 				break;
 
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			sleep();
+		}
+	}
+
+	private void sleep() {
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -52,8 +60,10 @@ public class UnitControlExample {
 		System.out.println("Turn " + turn);
 		
 		filterDeadUnits();
-
+		
 		randomizeTargets();
+
+		System.out.println("----------");
 
 		performUnitsAction();
 
@@ -75,7 +85,7 @@ public class UnitControlExample {
 		for (Unit unit : units) {
 			System.out.print(unit.getUnitName() + ": "
 					+ normalize(unit.getHP()) + "/"
-					+ normalize(unit.getMaxHP()) + ". ");
+					+ normalize(unit.getMaxHP()) + "HP. ");
 		}
 		System.out.println("");
 	}
@@ -113,7 +123,6 @@ public class UnitControlExample {
 	}
 
 	private void shuffle(Unit[] clone) {
-		Random rnd = ThreadLocalRandom.current();
 		for (int i = clone.length - 1; i > 0; i--) {
 			int index = rnd.nextInt(i + 1);
 			// Simple swap

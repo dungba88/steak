@@ -10,9 +10,12 @@ public class CounterAttackState extends AbstractUnitState {
 	public void onEntry(StateChangeEvent event) {
 		Unit unit = getControllingUnit();
 		Unit attackingUnit = getAttackingUnit();
-		unit.changeTarget(attackingUnit);
 		
-		log(unit.getUnitName() + " counterattacks " + attackingUnit.getUnitName());
+		if (unit.getTargetUnit() != attackingUnit) {
+			unit.changeTarget(attackingUnit);
+			
+			log(unit.getUnitName() + " locks on " + attackingUnit.getUnitName());
+		}
 
 		changeState("attack");
 	}
