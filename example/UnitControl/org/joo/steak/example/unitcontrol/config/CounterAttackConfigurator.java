@@ -13,9 +13,11 @@ public class CounterAttackConfigurator extends AbstractConfigurator {
 
 	@Override
 	protected void configureTransitions(DefaultStateEngineConfiguration config) {
+		config.addTransition("default", "done", "defend");
 		config.addTransition("*", "attack", "attack");
-		config.addTransitions("*", "attacked", new Object[] { new CriticalHealthTransition("idle"), "attack" });
+		config.addTransitions("*", "attacked", new Object[] { new CriticalHealthTransition("idle"), "counterattack" });
 		config.addTransitions("attack", "done", new Object[] { new CriticalHealthTransition("idle"), "attack" });
-		config.addTransitions("idle", "done", new Object[] { new CriticalHealthTransition("idle"), "counterattack" });
+		config.addTransitions("defend", "done", new Object[] { new CriticalHealthTransition("idle"), "attack" });
+		config.addTransitions("idle", "done", new Object[] { new CriticalHealthTransition("idle"), "attack" });
 	}
 }

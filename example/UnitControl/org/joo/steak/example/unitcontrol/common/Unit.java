@@ -5,8 +5,10 @@ import org.joo.steak.example.unitcontrol.states.UnitState;
 import org.joo.steak.framework.StateContext;
 import org.joo.steak.framework.StateManager;
 import org.joo.steak.framework.config.StateEngineConfiguration;
+import org.joo.steak.framework.event.StateChangeEvent;
 import org.joo.steak.impl.DefaultStateContext;
 import org.joo.steak.impl.DefaultStateManager;
+import org.joo.steak.impl.event.DefaultStateEngineListener;
 
 public class Unit {
 	
@@ -35,22 +37,48 @@ public class Unit {
 		stateContext.getContextMap().put("UNIT", this);
 		stateManager.initialize(stateContext, configuration, null);
 		stateManager.run();
+		
+		stateManager.addStateEngineListener(new DefaultStateEngineListener() {
+			
+			@Override
+			public void onFinish(StateChangeEvent event) {
+				System.out.println(unitName + " finished!");
+			}
+		});
 	}
 	
+	/**
+	 * Change the target to attack
+	 * 
+	 * @param unit
+	 * 			the unit to be attacked
+	 */
 	public void changeTarget(Unit unit) {
+		if (this.equals(unit))
+			return;
+		
 		putContextMap("TARGET_UNIT", unit);
 	}
 	
+	/**
+	 * Get the target unit
+	 * 
+	 * @return the target unit
+	 */
+	public Unit getTargetUnit() {
+		return (Unit) getContextMap("TARGET_UNIT");
+	}
+	
+	/**
+	 * Perform action for the current turn
+	 */
 	public void performAction() {
+		if (isDead())
+			return;
+		
 		UnitState state = getCurrentState();
 		if (state != null)
 			state.performAction();
-	}
-	
-	public void attack() {
-		UnitState state = getCurrentState();
-		if (state != null)
-			state.changeState("attack");
 	}
 	
 	public void onAttacked(Unit attackingUnit) {
@@ -63,6 +91,8 @@ public class Unit {
 
 	public void raiseHP(double hp) {
 		this.hp += hp;
+		if (this.hp > maxHP)
+			this.hp = maxHP;
 	}
 	
 	public void reduceHP(double hp) {
@@ -73,6 +103,10 @@ public class Unit {
 	
 	private void putContextMap(String key, Object value) {
 		stateManager.getStateContext().getContextMap().put(key, value);
+	}
+	
+	private Object getContextMap(String key) {
+		return stateManager.getStateContext().getContextMap().get(key);
 	}
 	
 	public UnitState getCurrentState() {

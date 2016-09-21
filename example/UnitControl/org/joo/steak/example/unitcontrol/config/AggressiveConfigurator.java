@@ -8,6 +8,7 @@ public class AggressiveConfigurator extends AbstractConfigurator {
 
 	@Override
 	protected void configureTransitions(DefaultStateEngineConfiguration config) {
+		config.addTransition("default", "done", "attack");
 		config.addTransition("*", "attack", "attack");
 		config.addTransitions("*", "attacked", new Object[] { new TargetInCriticalHealthTransition("attack"), new CriticalHealthTransition("idle"), "attack" });
 		config.addTransition("attack", "done", "attack");

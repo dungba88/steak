@@ -7,6 +7,7 @@ public class DefensiveConfigurator extends AbstractConfigurator {
 
 	@Override
 	protected void configureTransitions(DefaultStateEngineConfiguration config) {
+		config.addTransition("default", "done", "defend");
 		config.addTransition("*", "attack", "attack");
 		config.addTransitions("default", "attacked", new Object[] { new CriticalHealthTransition("idle"), "defend" });
 		config.addTransition("attack", "done", "defend");

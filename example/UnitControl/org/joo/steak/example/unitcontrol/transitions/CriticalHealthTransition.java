@@ -16,7 +16,7 @@ public class CriticalHealthTransition extends AbstractStateTransition {
 		StateContext stateContext = transitionContext.getStateContext();
 		Unit unit = (Unit) stateContext.getContextMap().get("UNIT");
 		if (unit.getHP() < unit.getMaxHP() * 0.25) {
-			System.out.println("Unit " + unit.getUnitName() + " is in critical health!");
+			System.out.println(unit.getUnitName() + " is in critical health!");
 			return true;
 		}
 		return false;
