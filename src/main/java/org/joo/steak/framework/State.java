@@ -18,8 +18,8 @@
  */
 package org.joo.steak.framework;
 
-import org.joo.steak.framework.event.StateChangedDispatcher;
 import org.joo.steak.framework.event.StateChangeEvent;
+import org.joo.steak.framework.event.StateChangedDispatcher;
 import org.joo.steak.framework.exception.StateExecutionException;
 
 /**
@@ -61,4 +61,22 @@ public interface State extends StateChangedDispatcher {
 	 * @throws StateExecutionException
 	 */
 	public void onExit(StateChangeEvent event) throws StateExecutionException;
+	
+	/**
+	 * Notify <code>StateManager</code> to change the state.
+	 * 
+	 * @param action
+	 *            the action that triggers the state change.
+	 */
+	public void changeState(String action);
+
+	/**
+	 * Notify <code>StateManager</code> to change the state.
+	 * 
+	 * @param action
+	 *            the action that triggers the state change.
+	 * @param args
+	 *            the arguments used to be passed to <code>StateManager</code>.
+	 */
+	public void changeState(String action, Object args);
 }
