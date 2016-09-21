@@ -143,7 +143,7 @@ public class UnitControlExample {
 			double hp = 10 + Math.random() * 10;
 			double dmg = 2 + Math.random() * 3;
 			Unit unit = new Unit("Unit " + (i + 1), unitType, hp, dmg);
-			System.out.println("Creating " + unit.getUnitName() + ": " + unitType.toString() + ". DMG: " + dmg);
+			System.out.println("Creating " + unit.getUnitName() + ": " + unitType.toString() + ". DMG: " + normalize(dmg));
 			units[i] = unit;
 		}
 
