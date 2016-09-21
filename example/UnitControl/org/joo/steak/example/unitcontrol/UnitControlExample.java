@@ -72,15 +72,6 @@ public class UnitControlExample {
 		System.out.println("");
 	}
 
-	private void filterDeadUnits() {
-		ArrayList<Unit> list = new ArrayList<Unit>();
-		for (Unit unit : units) {
-			if (!unit.isDead())
-				list.add(unit);
-		}
-		units = list.toArray(new Unit[0]);
-	}
-
 	private void printUnitsHP() {
 		for (Unit unit : units) {
 			System.out.print(unit.getUnitName() + ": "
@@ -88,10 +79,6 @@ public class UnitControlExample {
 					+ normalize(unit.getMaxHP()) + "HP. ");
 		}
 		System.out.println("");
-	}
-
-	private String normalize(double maxHP) {
-		return Math.round(maxHP) + "";
 	}
 
 	private void performUnitsAction() {
@@ -145,6 +132,15 @@ public class UnitControlExample {
 		return unit.getTargetUnit() == null || unit.getTargetUnit().isDead();
 	}
 
+	private void filterDeadUnits() {
+		ArrayList<Unit> list = new ArrayList<Unit>();
+		for (Unit unit : units) {
+			if (!unit.isDead())
+				list.add(unit);
+		}
+		units = list.toArray(new Unit[0]);
+	}
+
 	private Unit[] spawnUnits(int count) {
 		units = new Unit[count];
 
@@ -159,6 +155,10 @@ public class UnitControlExample {
 		}
 
 		return units;
+	}
+
+	private String normalize(double maxHP) {
+		return Math.round(maxHP) + "";
 	}
 
 	private UnitType chooseUnitType(int i) {
