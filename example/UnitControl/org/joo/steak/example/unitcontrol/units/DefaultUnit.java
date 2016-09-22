@@ -54,7 +54,7 @@ public class DefaultUnit implements Unit {
 
 	private Object hpLock = new Object();
 
-	public DefaultUnit(String unitName, UnitType unitType, double hp, double dmg) {
+	public DefaultUnit(final String unitName, UnitType unitType, double hp, double dmg) {
 		this.unitName = unitName;
 		this.maxHP = hp;
 		this.hp = hp;
@@ -113,10 +113,10 @@ public class DefaultUnit implements Unit {
 	}
 
 	@Override
-	public void onAttacked(Unit attackingUnit) {
+	public void onAttacked(final Unit attackingUnit) {
 		putContextMap("ATTACKING_UNIT", attackingUnit);
 
-		UnitState state = getCurrentState();
+		final UnitState state = getCurrentState();
 
 		if (state != null) {
 			ExecutorManager.getInstance().execute(new Runnable() {
