@@ -43,7 +43,7 @@ public class DefaultStateManager extends AbstractStateManager {
 	}
 
 	@Override
-	protected void doOnStateChange(StateChangeEvent event) {
+	protected void doStateChange(StateChangeEvent event) {
 		moveNextState(event);
 	}
 

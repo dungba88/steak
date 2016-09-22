@@ -97,9 +97,8 @@ public abstract class AbstractStateManager extends AbstractStateEngineDispatcher
 		if (event == null)
 			return;
 		
-		checkStateIntegrity(event);
-
-		doOnStateChange(event);
+		if (checkStateIntegrity(event))
+			doStateChange(event);
 	}
 
 	private Map<String, Map<String, StateTransition[]>> initializeTransitionsConfig(StateEngineLoader loader,
@@ -245,7 +244,7 @@ public abstract class AbstractStateManager extends AbstractStateEngineDispatcher
 
 	protected abstract void doRun();
 
-	protected abstract void doOnStateChange(StateChangeEvent event);
+	protected abstract void doStateChange(StateChangeEvent event);
 
 	protected abstract void doCheckStateIntegrity(StateChangeEvent event);
 
