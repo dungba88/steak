@@ -47,8 +47,12 @@ public class UnitControlExample {
 
 	public static void main(String[] args) {
 
-		UnitControlExample example = new UnitControlExample();
-		example.run();
+		try {
+			UnitControlExample example = new UnitControlExample();
+			example.run();
+		} finally {
+			ExecutorManager.getInstance().shutdown();
+		}
 	}
 
 	/**
@@ -68,8 +72,6 @@ public class UnitControlExample {
 
 			sleep();
 		}
-		
-		ExecutorManager.getInstance().shutdown();
 	}
 
 	/**
