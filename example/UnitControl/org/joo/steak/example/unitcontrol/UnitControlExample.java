@@ -68,6 +68,8 @@ public class UnitControlExample {
 
 			sleep();
 		}
+		
+		ExecutorManager.getInstance().shutdown();
 	}
 
 	/**

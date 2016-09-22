@@ -18,12 +18,15 @@
  */
 package org.joo.steak.example.unitcontrol.units;
 
+import org.joo.steak.example.unitcontrol.ExecutorManager;
 import org.joo.steak.example.unitcontrol.UnitConfigurationFactory;
 import org.joo.steak.example.unitcontrol.states.UnitState;
 import org.joo.steak.framework.StateContext;
 import org.joo.steak.framework.StateManager;
 import org.joo.steak.framework.config.StateEngineConfiguration;
 import org.joo.steak.framework.event.StateChangeEvent;
+import org.joo.steak.framework.exception.StateExceptionHandler;
+import org.joo.steak.framework.exception.StateExecutionException;
 import org.joo.steak.impl.DefaultStateContext;
 import org.joo.steak.impl.DefaultStateManager;
 import org.joo.steak.impl.event.DefaultStateEngineListener;
@@ -63,11 +66,20 @@ public class DefaultUnit implements Unit {
 		stateManager.initialize(stateContext, configuration, null);
 		stateManager.run();
 		
+		stateManager.registerExceptionHandler(new StateExceptionHandler() {
+			
+			@Override
+			public boolean handleException(StateExecutionException exception) {
+				System.out.println(exception.getCause().getMessage());
+				return true;
+			}
+		});
+		
 		stateManager.addStateEngineListener(new DefaultStateEngineListener() {
 			
 			@Override
 			public void onFinish(StateChangeEvent event) {
-				System.out.println(unitName + " finished!");
+				System.out.println(unitName + " finished! " + stateManager.getCurrentState() + " -> " + event.getAction());
 			}
 		});
 	}
@@ -100,12 +112,22 @@ public class DefaultUnit implements Unit {
 		putContextMap("ATTACKING_UNIT", attackingUnit);
 		
 		UnitState state = getCurrentState();
-		if (state != null)
-			state.onAttacked(attackingUnit);
+		
+		if (state != null) {
+			ExecutorManager.getInstance().execute(new Runnable() {
+				
+				@Override
+				public void run() {
+						state.onAttacked(attackingUnit);
+				}
+			});
+		}
 	}
 
 	@Override
 	public void raiseHP(double hp) {
+		if (isDead())	// to make sure for concurrent issue
+			return;
 		this.hp += hp;
 		if (this.hp > maxHP)
 			this.hp = maxHP;
