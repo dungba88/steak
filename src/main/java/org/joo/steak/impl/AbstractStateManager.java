@@ -200,6 +200,12 @@ public abstract class AbstractStateManager extends AbstractStateEngineDispatcher
 			this.exceptionHandlers.remove(idx);
 	}
 	
+	/**
+	 * Delegate exception to exception handlers
+	 * 
+	 * @param exception
+	 * 				the exception to be delegated
+	 */
 	protected void delegateException(StateExecutionException exception) {
 		boolean success = false;
 		
@@ -211,6 +217,14 @@ public abstract class AbstractStateManager extends AbstractStateEngineDispatcher
 			throw new RuntimeException(exception);
 	}
 	
+	/**
+	 * Check for state integrity when a StateChangeEvent is raised.
+	 * It will throw exception if the source object is not the same as
+	 * the <code>currentState</code> 
+	 * 
+	 * @param event
+	 * 			the event raised
+	 */
 	protected final void checkStateIntegrity(StateChangeEvent event) {
 		try {
 			doCheckStateIntegrity(event);
@@ -227,6 +241,12 @@ public abstract class AbstractStateManager extends AbstractStateEngineDispatcher
 		}
 	}
 
+	/**
+	 * Transit to next state
+	 * 
+	 * @param event
+	 * 			the event
+	 */
 	protected final void moveNextState(StateChangeEvent event) {
 		exitCurrentState(event);
 		
