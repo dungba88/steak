@@ -30,8 +30,10 @@ public abstract class AbstractUnitState extends DefaultState implements UnitStat
 	}
 	
 	public Unit getTargetUnit() {
-		StateContext context = getStateContext();
-		return (Unit) context.getContextMap().get("TARGET_UNIT");
+		Unit unit = getControllingUnit();
+		if (unit != null)
+			return unit.getTargetUnit();
+		return null;
 	}
 
 	@Override
