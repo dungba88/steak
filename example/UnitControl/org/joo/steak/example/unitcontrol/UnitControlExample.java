@@ -38,7 +38,7 @@ import org.joo.steak.example.unitcontrol.common.UnitType;
  */
 public class UnitControlExample {
 
-	private static final int UNIT_SPAWNED = 10;
+	private static final int UNIT_SPAWNED = 9;
 
 	private Unit[] units;
 

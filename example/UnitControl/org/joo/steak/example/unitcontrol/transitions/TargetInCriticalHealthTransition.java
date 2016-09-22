@@ -33,9 +33,6 @@ public class TargetInCriticalHealthTransition extends AbstractStateTransition {
 	public boolean isSatisfiedBy(TransitionContext transitionContext) {
 		StateContext stateContext = transitionContext.getStateContext();
 		Unit unit = (Unit) stateContext.getContextMap().get("TARGET_UNIT");
-		if (unit.getHP() < unit.getMaxHP() * 0.25) {
-			return true;
-		}
-		return false;
+		return (unit.getHP() < unit.getMaxHP() * 0.25);
 	}
 }
