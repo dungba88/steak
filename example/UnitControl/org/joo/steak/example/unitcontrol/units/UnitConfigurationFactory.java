@@ -16,12 +16,11 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.joo.steak.example.unitcontrol;
+package org.joo.steak.example.unitcontrol.units;
 
 import org.joo.steak.example.unitcontrol.config.AggressiveConfigurator;
 import org.joo.steak.example.unitcontrol.config.CounterAttackConfigurator;
 import org.joo.steak.example.unitcontrol.config.DefensiveConfigurator;
-import org.joo.steak.example.unitcontrol.units.UnitType;
 import org.joo.steak.framework.config.StateEngineConfigurator;
 
 /**

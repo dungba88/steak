@@ -19,7 +19,6 @@
 package org.joo.steak.example.unitcontrol.units;
 
 import org.joo.steak.example.unitcontrol.ExecutorManager;
-import org.joo.steak.example.unitcontrol.UnitConfigurationFactory;
 import org.joo.steak.example.unitcontrol.states.UnitState;
 import org.joo.steak.framework.StateContext;
 import org.joo.steak.framework.StateManager;
