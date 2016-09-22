@@ -28,6 +28,13 @@ import org.joo.steak.impl.DefaultStateContext;
 import org.joo.steak.impl.DefaultStateManager;
 import org.joo.steak.impl.event.DefaultStateEngineListener;
 
+/**
+ * Represent an unit. An unit can have HP, DMG, and its own state engine.
+ * It can take turn and perform actions based on its current state.
+ * 
+ * @author griever
+ *
+ */
 public class Unit {
 	
 	private double maxHP;
@@ -99,6 +106,12 @@ public class Unit {
 			state.performAction();
 	}
 	
+	/**
+	 * Called when the unit is attacked
+	 * 
+	 * @param attackingUnit
+	 * 			the attacker
+	 */
 	public void onAttacked(Unit attackingUnit) {
 		putContextMap("ATTACKING_UNIT", attackingUnit);
 		
@@ -107,12 +120,22 @@ public class Unit {
 			state.onAttacked(attackingUnit);
 	}
 
+	/**
+	 * Raise unit HP
+	 * 
+	 * @param hp
+	 */
 	public void raiseHP(double hp) {
 		this.hp += hp;
 		if (this.hp > maxHP)
 			this.hp = maxHP;
 	}
 	
+	/**
+	 * Reduce the unit HP
+	 * 
+	 * @param hp
+	 */
 	public void reduceHP(double hp) {
 		this.hp -= hp;
 		if (this.hp < 0)

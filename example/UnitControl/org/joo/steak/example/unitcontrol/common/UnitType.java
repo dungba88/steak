@@ -18,6 +18,11 @@
  */
 package org.joo.steak.example.unitcontrol.common;
 
+/**
+ * Represent unit class
+ * 
+ * @author griever
+ */
 public enum UnitType {
 
 	AGGRESSIVE, DEFENSIVE, COUNTER_ATTACK;
