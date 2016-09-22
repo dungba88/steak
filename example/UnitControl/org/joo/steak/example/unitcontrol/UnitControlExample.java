@@ -64,7 +64,7 @@ public class UnitControlExample {
 		for (int i = 1; i <= 100; i++) {
 			doTurn(i);
 
-			Unit winner = checkWin();
+			Unit winner = getWinner();
 			if (winner != null) {
 				System.out.println(winner.getUnitName() + " win!");
 				break;
@@ -86,11 +86,11 @@ public class UnitControlExample {
 	}
 
 	/**
-	 * Check if only one unit survives.
+	 * Get the winner, which is the only one survives
 	 * 
 	 * @return the winner
 	 */
-	private Unit checkWin() {
+	private Unit getWinner() {
 		ArrayList<Unit> list = new ArrayList<Unit>();
 		for (Unit unit : units) {
 			if (!unit.isDead()) {
