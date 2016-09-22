@@ -19,8 +19,10 @@
 package org.joo.steak.impl;
 
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.RejectedExecutionException;
 
 import org.joo.steak.framework.event.StateChangeEvent;
+import org.joo.steak.framework.exception.StateExecutionException;
 
 /**
  * Asynchronous implementation of <code>StateManager</code>. It relies on
@@ -55,13 +57,21 @@ public class AsyncStateManager extends DefaultStateManager {
 
 		checkStateIntegrity(event);
 
-		service.execute(new Runnable() {
-
-			@Override
-			public void run() {
-				moveNextState(event);
+		try {
+			service.execute(new Runnable() {
+	
+				@Override
+				public void run() {
+					moveNextState(event);
+				}
+			});
+		} catch (RejectedExecutionException ex) {
+			if (service.isShutdown()) {
+				delegateException(new StateExecutionException("Thread pool has been shut down.", ex));
+			} else {
+				delegateException(new StateExecutionException("Exception occurred in onStateChange", ex));
 			}
-		});
+		}
 	}
 
 	public ExecutorService getExecutorService() {

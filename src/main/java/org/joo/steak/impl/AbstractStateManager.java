@@ -212,12 +212,21 @@ public abstract class AbstractStateManager extends AbstractStateEngineDispatcher
 	}
 	
 	protected final void checkStateIntegrity(StateChangeEvent event) {
-		State currentState = getState(getCurrentState());
-		State state = (State) event.getSource();
-		if (state != currentState)
-			throw new IllegalArgumentException("StateChangedEvent was raised with invalid state");
+		try {
+			doCheckStateIntegrity(event);
+		} catch (Exception ex) {
+			delegateException(new StateExecutionException("State integrity check failed", ex));
+		}
 	}
 	
+	protected void doCheckStateIntegrity(StateChangeEvent event) {
+		State currentState = getState(getCurrentState());
+		State state = (State) event.getSource();
+		if (state != currentState) {
+			throw new IllegalStateException("StateChangedEvent was raised with invalid state. Expected " + getCurrentState() + " but get " + state.getClass().getName());
+		}
+	}
+
 	protected final void moveNextState(StateChangeEvent event) {
 		exitCurrentState(event);
 		
