@@ -18,8 +18,7 @@
  */
 package org.joo.steak.example.unitcontrol.states;
 
-import org.joo.steak.example.unitcontrol.common.Unit;
-
+import org.joo.steak.example.unitcontrol.units.Unit;
 
 public class DefendState extends AbstractUnitState {
 	

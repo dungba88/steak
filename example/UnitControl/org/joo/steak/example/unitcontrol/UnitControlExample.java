@@ -22,8 +22,9 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-import org.joo.steak.example.unitcontrol.common.Unit;
-import org.joo.steak.example.unitcontrol.common.UnitType;
+import org.joo.steak.example.unitcontrol.units.DefaultUnit;
+import org.joo.steak.example.unitcontrol.units.Unit;
+import org.joo.steak.example.unitcontrol.units.UnitType;
 
 /**
  * Example of using Steak to control unit states and transitions. It is a
@@ -237,7 +238,7 @@ public class UnitControlExample {
 			UnitType unitType = chooseUnitType(i);
 			double hp = 10 + Math.random() * 10;
 			double dmg = 2 + Math.random() * 3;
-			Unit unit = new Unit("Unit " + (i + 1), unitType, hp, dmg);
+			Unit unit = new DefaultUnit("Unit " + (i + 1), unitType, hp, dmg);
 			System.out.println("Creating " + unit.getUnitName() + ": "
 					+ unitType.toString() + ". DMG: " + normalize(dmg));
 			units[i] = unit;

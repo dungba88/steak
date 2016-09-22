@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.joo.steak.example.unitcontrol.common;
+package org.joo.steak.example.unitcontrol.units;
 
 import org.joo.steak.example.unitcontrol.UnitConfigurationFactory;
 import org.joo.steak.example.unitcontrol.states.UnitState;
@@ -35,7 +35,7 @@ import org.joo.steak.impl.event.DefaultStateEngineListener;
  * @author griever
  *
  */
-public class Unit {
+public class DefaultUnit implements Unit {
 	
 	private double maxHP;
 	
@@ -49,7 +49,7 @@ public class Unit {
 	
 	private String unitName;
 
-	public Unit(String unitName, UnitType unitType, double hp, double dmg) {
+	public DefaultUnit(String unitName, UnitType unitType, double hp, double dmg) {
 		this.unitName = unitName;
 		this.maxHP = hp;
 		this.hp = hp;
@@ -72,12 +72,7 @@ public class Unit {
 		});
 	}
 	
-	/**
-	 * Change the target to attack
-	 * 
-	 * @param unit
-	 * 			the unit to be attacked
-	 */
+	@Override
 	public void changeTarget(Unit unit) {
 		if (this.equals(unit))
 			return;
@@ -85,18 +80,12 @@ public class Unit {
 		putContextMap("TARGET_UNIT", unit);
 	}
 	
-	/**
-	 * Get the target unit
-	 * 
-	 * @return the target unit
-	 */
-	public Unit getTargetUnit() {
-		return (Unit) getContextMap("TARGET_UNIT");
+	@Override
+	public DefaultUnit getTargetUnit() {
+		return (DefaultUnit) getContextMap("TARGET_UNIT");
 	}
 	
-	/**
-	 * Perform action for the current turn
-	 */
+	@Override
 	public void performAction() {
 		if (isDead())
 			return;
@@ -106,12 +95,7 @@ public class Unit {
 			state.performAction();
 	}
 	
-	/**
-	 * Called when the unit is attacked
-	 * 
-	 * @param attackingUnit
-	 * 			the attacker
-	 */
+	@Override
 	public void onAttacked(Unit attackingUnit) {
 		putContextMap("ATTACKING_UNIT", attackingUnit);
 		
@@ -120,22 +104,14 @@ public class Unit {
 			state.onAttacked(attackingUnit);
 	}
 
-	/**
-	 * Raise unit HP
-	 * 
-	 * @param hp
-	 */
+	@Override
 	public void raiseHP(double hp) {
 		this.hp += hp;
 		if (this.hp > maxHP)
 			this.hp = maxHP;
 	}
 	
-	/**
-	 * Reduce the unit HP
-	 * 
-	 * @param hp
-	 */
+	@Override
 	public void reduceHP(double hp) {
 		this.hp -= hp;
 		if (this.hp < 0)
@@ -150,26 +126,31 @@ public class Unit {
 		return stateManager.getStateContext().getContextMap().get(key);
 	}
 	
-	public UnitState getCurrentState() {
+	private UnitState getCurrentState() {
 		return (UnitState) stateManager.getState(stateManager.getCurrentState());
 	}
 	
+	@Override
 	public double getHP() {
 		return hp;
 	}
 	
+	@Override
 	public double getMaxHP() {
 		return maxHP;
 	}
 	
+	@Override
 	public double getDamage() {
 		return dmg;
 	}
 	
+	@Override
 	public String getUnitName() {
 		return unitName;
 	}
 	
+	@Override
 	public boolean isDead() {
 		return hp == 0;
 	}

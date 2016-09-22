@@ -18,10 +18,10 @@
  */
 package org.joo.steak.example.unitcontrol;
 
-import org.joo.steak.example.unitcontrol.common.UnitType;
 import org.joo.steak.example.unitcontrol.config.AggressiveConfigurator;
 import org.joo.steak.example.unitcontrol.config.CounterAttackConfigurator;
 import org.joo.steak.example.unitcontrol.config.DefensiveConfigurator;
+import org.joo.steak.example.unitcontrol.units.UnitType;
 import org.joo.steak.framework.config.StateEngineConfigurator;
 
 /**

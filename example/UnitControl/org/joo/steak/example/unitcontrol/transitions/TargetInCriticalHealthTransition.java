@@ -18,7 +18,7 @@
  */
 package org.joo.steak.example.unitcontrol.transitions;
 
-import org.joo.steak.example.unitcontrol.common.Unit;
+import org.joo.steak.example.unitcontrol.units.Unit;
 import org.joo.steak.framework.StateContext;
 import org.joo.steak.framework.TransitionContext;
 import org.joo.steak.impl.AbstractStateTransition;
