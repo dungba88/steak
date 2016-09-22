@@ -91,6 +91,16 @@ public abstract class AbstractStateManager extends AbstractStateEngineDispatcher
 
 		doRun();
 	}
+	
+	@Override
+	public void onStateChange(StateChangeEvent event) {
+		if (event == null)
+			return;
+		
+		checkStateIntegrity(event);
+
+		doOnStateChange(event);
+	}
 
 	private Map<String, Map<String, StateTransition[]>> initializeTransitionsConfig(StateEngineLoader loader,
 			Map<String, Map<String, Object[]>> transitionsConfig) {
@@ -143,16 +153,6 @@ public abstract class AbstractStateManager extends AbstractStateEngineDispatcher
 		state.addStateChangedListener(this);
 		state.initialize(stateContext);
 	}
-
-	protected abstract Map<String, State> doInitializeStatesMap();
-
-	protected abstract Map<String, StateTransition[]> doInitializeTransitionMap();
-
-	protected abstract Map<String, Map<String, StateTransition[]>> doInitializeTransitionsMap();
-
-	protected abstract void doInitialization(StateEngineConfiguration configuration);
-
-	protected abstract void doRun();
 
 	@Override
 	public State getState(String stateName) {
@@ -225,21 +225,29 @@ public abstract class AbstractStateManager extends AbstractStateEngineDispatcher
 	 * @param event
 	 * 			the event raised
 	 */
-	protected final void checkStateIntegrity(StateChangeEvent event) {
+	protected final boolean checkStateIntegrity(StateChangeEvent event) {
 		try {
 			doCheckStateIntegrity(event);
 		} catch (Exception ex) {
 			delegateException(new StateExecutionException("State integrity check failed", ex));
+			return false;
 		}
+		return true;
 	}
 	
-	protected void doCheckStateIntegrity(StateChangeEvent event) {
-		State currentState = getState(getCurrentState());
-		State state = (State) event.getSource();
-		if (state != currentState) {
-			throw new IllegalStateException("StateChangedEvent was raised with invalid state. Expected " + getCurrentState() + " but get " + state.getClass().getName());
-		}
-	}
+	protected abstract Map<String, State> doInitializeStatesMap();
+
+	protected abstract Map<String, StateTransition[]> doInitializeTransitionMap();
+
+	protected abstract Map<String, Map<String, StateTransition[]>> doInitializeTransitionsMap();
+
+	protected abstract void doInitialization(StateEngineConfiguration configuration);
+
+	protected abstract void doRun();
+
+	protected abstract void doOnStateChange(StateChangeEvent event);
+
+	protected abstract void doCheckStateIntegrity(StateChangeEvent event);
 
 	/**
 	 * Transit to next state
@@ -257,8 +265,9 @@ public abstract class AbstractStateManager extends AbstractStateEngineDispatcher
 			enterState(nextStateId, event);
 		} else {
 			// no state found, exit the engine
-			currentState = null;
 			dispatchStateEngineFinishEvent(event);
+
+			currentState = null;
 		}
 	}
 	

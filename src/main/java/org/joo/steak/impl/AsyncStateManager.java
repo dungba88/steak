@@ -51,12 +51,7 @@ public class AsyncStateManager extends DefaultStateManager {
 	}
 
 	@Override
-	public void onStateChange(StateChangeEvent event) {
-		if (event == null)
-			return;
-
-		checkStateIntegrity(event);
-
+	public void doOnStateChange(StateChangeEvent event) {
 		try {
 			service.execute(new Runnable() {
 	

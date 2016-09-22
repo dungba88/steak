@@ -34,12 +34,16 @@ public class DefaultStateManager extends AbstractStateManager {
 	}
 
 	@Override
-	public void onStateChange(StateChangeEvent event) {
-		if (event == null)
-			return;
-		
-		checkStateIntegrity(event);
+	protected void doCheckStateIntegrity(StateChangeEvent event) {
+		State currentState = getState(getCurrentState());
+		State state = (State) event.getSource();
+		if (state != currentState) {
+			throw new IllegalStateException("StateChangedEvent was raised with invalid state. Expected " + getCurrentState() + " but get " + state.getClass().getName());
+		}
+	}
 
+	@Override
+	protected void doOnStateChange(StateChangeEvent event) {
 		moveNextState(event);
 	}
 
