@@ -61,7 +61,7 @@ public class StandaloneStateTest {
 		StateEngineConfiguration configuration = setupSimpleConfiguration();
 
 		// create new fixed thread pool with 8 threads
-		ExecutorService service = Executors.newFixedThreadPool(8);
+		final ExecutorService service = Executors.newFixedThreadPool(8);
 
 		StateManager manager = new AsyncStateManager(service);
 		manager.initialize(stateContext, configuration, null);

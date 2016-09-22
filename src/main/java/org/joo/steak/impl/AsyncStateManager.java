@@ -51,7 +51,7 @@ public class AsyncStateManager extends DefaultStateManager {
 	}
 
 	@Override
-	public void doStateChange(StateChangeEvent event) {
+	public void doStateChange(final StateChangeEvent event) {
 		try {
 			service.execute(new Runnable() {
 	
