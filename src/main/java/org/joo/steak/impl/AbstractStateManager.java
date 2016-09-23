@@ -282,6 +282,12 @@ public abstract class AbstractStateManager extends AbstractStateEngineDispatcher
 		return null;
 	}
 
+	/**
+	 * Exit from current state and call its onExit method
+	 * 
+	 * @param event
+	 * 				the event which cause the state change
+	 */
 	protected void exitCurrentState(StateChangeEvent event) {
 		State currentStateObj = getState(currentState);
 		if (currentStateObj != null) {
@@ -293,6 +299,14 @@ public abstract class AbstractStateManager extends AbstractStateEngineDispatcher
 		}
 	}
 
+	/**
+	 * Enter a state and call that state's onEntry method
+	 * 
+	 * @param nextStateId
+	 * 				the state to enter
+	 * @param event
+	 * 				the event which causes state change
+	 */
 	protected void enterState(String nextStateId, StateChangeEvent event) {
 		dispatchBeforeStateChangeEvent(event);
 		
